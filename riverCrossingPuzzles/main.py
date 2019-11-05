@@ -6,6 +6,7 @@ Created on Nov 5, 2019
 
 def main():
     print("Hello World!")
+    print("Hello Class")
 
   
 if __name__== "__main__":
