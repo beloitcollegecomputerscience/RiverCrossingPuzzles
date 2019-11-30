@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import unittest
-import GameState, Boat
+from riverCrossingPuzzles import Boat, GameState
 
-class TestBoatMethods(unittest.TestCase):
+class BoatShoreTests(unittest.TestCase):
 
     def test_boat_unmoved_starts_left_stays_left(self):
         state = GameState()
@@ -17,6 +17,4 @@ class TestBoatMethods(unittest.TestCase):
         state = GameState()
         state.boat.moveToShore("right")
         self.assertEqual(state.boat.getShore(), "right")
-        
-if __name__ == '__main__':
-    unittest.main()
+ 

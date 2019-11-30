@@ -27,6 +27,6 @@ class Boat:
     def getShore(self):
         pass
 
-    def moveToShore(self):
+    def moveToShore(self, shore):
         pass
 
