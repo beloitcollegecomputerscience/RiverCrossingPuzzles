@@ -2,11 +2,9 @@
 Created on October 27, 2019
 Test code for Boat class' getSpaces() method which would return a list of the available spaces in the boat
 
-@author: Corina & Lilly
 '''
 import unittest
-from Boat import *
-
+from riverCrossingPuzzles import Boat
 
 class Test(unittest.TestCase):
      
