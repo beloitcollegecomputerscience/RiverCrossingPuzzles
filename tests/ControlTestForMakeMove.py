@@ -11,8 +11,8 @@ class ControlTestForMakeMove(unittest.TestCase):
         """Checks that this is the character we want to work with"""
         self.assertEqual(char_id, 2)
         """Checks that the character is in the right place"""
-        self.assertTrue(LocationDummy.checkLocation(self, char_id), None)
+        self.assertEqual(LocationDummy.checkLocation(self, char_id), None)
         """Checks that the move is legal"""
-        self.assertTrue(ValidationDummy.isLegal(self, move, char_id), None)
+        self.assertEqual(ValidationDummy.isLegal(self, move, char_id), None)
         """Updates location"""
-        self.assertTrue(LocationDummy.updateLocation(self, char_id, 'new location'), None)
+        self.assertEqual(LocationDummy.updateLocation(self, char_id, 'new location'), None)
