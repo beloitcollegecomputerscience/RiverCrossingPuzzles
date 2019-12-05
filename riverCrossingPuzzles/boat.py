@@ -1,8 +1,5 @@
 '''
-Created on October 27, 2019
 An unimplemented Boat class with method stubs
-
-@author: Corina and Lilly
 '''
 
 class Boat:
