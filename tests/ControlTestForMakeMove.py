@@ -5,7 +5,7 @@ from riverCrossingPuzzles.filesForMakeMoveTest import LocationDummy, ValidationD
 """Checks with Validation class if the move is valid. If yes, update the Location class and call the Animation."""
 
 
-class ControlTest(unittest.TestCase):
+class ControlTestForMakeMove(unittest.TestCase):
 
     def test_make_move(self, char_id=2, move='move'):
         """Checks that this is the character we want to work with"""
