@@ -4,7 +4,7 @@ Test code for boat class' getSpaces() method which would return a list of the av
 import unittest
 from riverCrossingPuzzles import Boat
 
-class Test(unittest.TestCase):
+class BoatSpacesTests(unittest.TestCase):
      
     # Test if the boat is empty by comparing the size of the list of empty spaces (list returned by getSpaced) versus the total number
     def test_empty_boat(self):
