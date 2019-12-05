@@ -1,9 +1,8 @@
 # by Aidan and Amine
-
 import unittest
 from riverCrossingPuzzles import GameState
 
-class BoatOverFilledTest(unittest.TestCase):
+class BoatOverfilledTest(unittest.TestCase):
 
     def test_fullness(self):
         for b_occupants in range(11):
