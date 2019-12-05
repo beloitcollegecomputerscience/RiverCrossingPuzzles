@@ -9,6 +9,9 @@ class Boat:
     boatSize = 0
     occupiedSeats = 0
 
+    def __init__(self, occupants):
+        self.occupiedSeats = occupants
+
     def getSpaces(self):
         pass
 
