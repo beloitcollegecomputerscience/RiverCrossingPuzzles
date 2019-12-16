@@ -1,6 +1,7 @@
 '''
 Test code for boat class' getSpaces() method which would return a list of the available spaces in the boat
 '''
+
 import unittest
 from riverCrossingPuzzles import Boat
 
