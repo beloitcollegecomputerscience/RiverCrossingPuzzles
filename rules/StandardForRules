@@ -1,0 +1,58 @@
+Definition standard for the rules
+
+The rules class will be a dictionary with the following key/value combos. 
+All games will have an entry for all keys, but, depending on the game, 
+most will point to null values.
+
+Example:
+keyName
+    data type
+    description
+
+items
+    list
+    Characters or objects in the game
+
+beginLeft; beginBoat; beginRight
+    list
+    Starting locations of items
+
+landIncompatible
+    dictionary with lists as values
+    Items that are incompatible on land
+    Every unit with at least one incompatibility will have a key with its name
+    That key corresponds to a list of names it is incompatible with
+
+boatIncompatible
+    dictionary with lists as values
+    Items that are incompatible in the boat
+    Every unit with at least one incompatibility will have a key with its name
+    That key corresponds to a list of names it is incompatible with
+
+boatOccupancy
+    integer
+    Number of items the boat can contain
+
+teams
+    list containing lists
+    groupings of items
+    The subordinate lists are named after the teams and 
+    contain the names of the team members
+
+teamIncompatible
+    dictionary with team names as values
+    Team out-numbering lose conditions
+
+immovables
+    list of unit names
+    The immovable items
+
+pilot
+    string: name of item or 
+    list if multiple items (or certain combinations) are required
+    Items required for the boat to move
+
+isIsland
+    boolean
+    If the island is present or not
+    Whether the rules should be checked upon moving an item or moving the boat
