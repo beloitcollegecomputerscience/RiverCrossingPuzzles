@@ -4,3 +4,5 @@ from .ControlTestForMakeMove import ControlTestForMakeMove
 from .BoatSpacesTests import BoatSpacesTests
 from .LocationTest import LocationTest
 from .EndGameTest import EndGameTest
+from .NewGameTest import NewGameTest
+from .SetNewGameTest import SetNewGameTest
