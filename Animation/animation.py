@@ -161,7 +161,6 @@ def goat_clicked(x, y):
 	return False
 
 
-
 if __name__ =='__main__':
 	pyglet.clock.schedule_interval(update, 1/200.0)
 	pyglet.app.run()
