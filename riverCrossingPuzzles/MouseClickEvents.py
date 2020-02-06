@@ -14,12 +14,13 @@ window_width = 1080
 window_height = 800
 window = pyglet.window.Window(window_width, window_height)
 
-
+#To get sprite on the screen
 @window.event
 def on_draw():
     window.clear()
     sprite.draw()
 
+#Mouse Click Event
 @window.event
 def on_mouse_press(x, y, button, modifiers):
     if button & mouse.LEFT:
