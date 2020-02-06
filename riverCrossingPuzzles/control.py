@@ -3,10 +3,7 @@ Created on Oct 30, 2019
 
 @author: sauga, wadood, mashfik
 '''
-from Rules import Rules
-from Validation import Validation
-from Location import Location
-from Animation import Animation
+from . import Rules, Validation, Location, Animation
 
 class Control:
     '''
@@ -24,15 +21,15 @@ class Control:
     def makeMove(self, charID):
         a = Validation().isLegal(move, charID)
         # 1 denotes that the move is legal
-        if a ==  1:
+        if a == 1:
             #Update Location 
-            Location.addID():
+            Location.addID()
             #Calling Animation
-            Animation.Animation.moveChar(self, x, y):
-            Animation.Animation.updateImage(self, charID, imageID):
-            Animation.Animation.moveBoat(self, x1, y1, x2, y2):
+            Animation.Animation.moveChar(self, x, y)
+            Animation.Animation.updateImage(self, charID, imageID)
+            Animation.Animation.moveBoat(self, x1, y1, x2, y2)
             
-        else 
+        else: 
            print("Invalid Move")  
            
     def endCurrentGame(self, hasWon, gameNumber):
@@ -43,10 +40,10 @@ class Control:
         c = Validation.isLegal(self, move, charID)
         #assuming the initial coordinate to be (0,0) and final destination to be (10,10) and assuming it is a legal move
         b = Animation.moveBoat(self, 0, 0, 10, 10)
-        if Animation.moveBoat(self, x1, y1, x2, y2) == b and c = 1
+        if Animation.moveBoat(self, x1, y1, x2, y2) == b and c == 1:
             # Call GUI to update the score
             # Reset the Screen
-        else 
+        else:
             Animation.moveBoat(self, 0, 0, 0, 0)     #This means that boat is stable
                      
             

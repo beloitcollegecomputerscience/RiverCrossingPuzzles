@@ -1,6 +1,4 @@
-'''
-An unimplemented Boat class with method stubs
-'''
+"""An unimplemented Boat class with method stubs."""
 
 class Boat:
     boatSize = 0
