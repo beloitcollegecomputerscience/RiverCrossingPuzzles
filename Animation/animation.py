@@ -2,6 +2,7 @@ import pyglet
 import time
 from pyglet.window import mouse
 
+
 img_1 = pyglet.resource.image("images/goat.png")
 img_2 = pyglet.resource.image("images/wolf.png")
 img_3 = pyglet.resource.image("images/farmer.png")
@@ -30,6 +31,13 @@ small_bottom_margin = 100
 each_height = 130
 each_width = 100
 clicked = False
+
+destination_3 = [hor_gap, small_bottom_margin + each_height * 2 + ver_gap * 2]
+destination_4 = [hor_gap, small_bottom_margin + each_height + ver_gap]
+destination_2 = [hor_gap + each_width, large_bottom_margin + each_height * 2 + ver_gap * 2]
+destination_1 = [hor_gap + each_width, large_bottom_margin + each_height + ver_gap] 
+destination_boat = [boat.x, boat.y]
+
 window = pyglet.window.Window(img_background.width, img_background.height)
 @window.event
 def on_draw():
@@ -47,52 +55,31 @@ def on_mouse_press(x, y, button, modifiers):
 	pass
 
 def update(duration):
-	global clicked
+	global clicked, destination_1, destination_2, destination_3, destination_4, destination_boat
 	velocity = 300
-
-	destination_3_x = hor_gap
-	destination_4_x = hor_gap
-	destination_2_x = hor_gap + each_width
-	destination_1_x = hor_gap + each_width
-
-	destination_1_y = large_bottom_margin + each_height + ver_gap
-	destination_4_y = small_bottom_margin + each_height + ver_gap
-	destination_2_y= large_bottom_margin + each_height * 2 + ver_gap * 2
-	destination_3_y = small_bottom_margin + each_height * 2 + ver_gap * 2
-	destination_boat_x = 500
-
 	if clicked == True:
-		destination_1_x += river
-		destination_2_x += river
-		destination_3_x += river + hor_gap * 2 + each_width * 2
-		destination_4_x += river + hor_gap * 2 + each_width * 2
-		animate(boat, destination_boat_x, boat.y, duration, velocity)
+		destination_1[0] += river
+		destination_2[0] += river
+		destination_3[0] += river + hor_gap * 2 + each_width * 2
+		destination_4[0] += river + hor_gap * 2 + each_width * 2
+		destination_boat[0] += 50
+		clicked = False
 
-	animate(sprite_1, destination_1_x, destination_1_y, duration, velocity)
-	animate(sprite_2, destination_2_x, destination_2_y, duration, velocity)
-	animate(sprite_3, destination_3_x, destination_3_y, duration, velocity)
-	animate(sprite_4, destination_4_x, destination_4_y, duration, velocity)
+	animate(sprite_1, destination_1, duration, velocity)
+	animate(sprite_2, destination_2, duration, velocity)
+	animate(sprite_3, destination_3, duration, velocity)
+	animate(sprite_4, destination_4, duration, velocity)
+	animate(boat, destination_boat, duration, velocity)
 
-def animate(sprt, destination_x, destination_y, duration, velocity):
-	if sprt.x < destination_x - 1:
+def animate(sprt, destination, duration, velocity):
+	if sprt.x < destination[0] - 3:
 		sprt.x += velocity * duration
-	if sprt.x > destination_x + 1:
+	if sprt.x > destination[0] + 3:
 		sprt.x -= velocity * duration
-	if sprt.y < destination_y - 1:
+	if sprt.y < destination[1] - 3:
 		sprt.y += velocity * duration
-	if sprt.y > destination_y + 1:
+	if sprt.y > destination[1] + 3:
 		sprt.y -= velocity * duration
-
-def check(sprt, destination_x, destination_y):
-	if sprt.x < destination_x - 3:
-		return False
-	if sprt.x > destination_x + 3:
-		return False
-	if sprt.y < destination_y - 3:
-		return False
-	if sprt.y > destination_y + 3:
-		return False
-	return True
 
 if __name__ =='__main__':
 	pyglet.clock.schedule_interval(update, 1/200.0)
