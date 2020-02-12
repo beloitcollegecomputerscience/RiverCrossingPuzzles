@@ -16,9 +16,9 @@ class InvalidMove(Exception):
     pass
 
 class Move:
-    def __init__(self, subject, obj):
-        self.subject = subject
+    def __init__(self, obj, location):
         self.object = obj
+        self.location = location
 
 class GameState:
     def __init__(self):
@@ -26,6 +26,7 @@ class GameState:
         self.right_shore = []
         self.boat_position = "left"
         self.boat = []
+        self.boat_capacity = 2
 
     def report(self):
         s = ""
@@ -36,34 +37,34 @@ class GameState:
         return s
 
     def apply_move(self, move):
-        if move.subject not in self.boat + self.left_shore + self.right_shore + ["boat"]:
-            raise InvalidMove("Unknown command subject '" + move.subject + "'.")
-        if move.subject == "boat":
-            if move.object not in ["left", "right"]:
+        if move.object not in self.boat + self.left_shore + self.right_shore + ["boat"]:
+            raise InvalidMove("Unknown command object '" + move.object + "'.")
+        if move.object == "boat":
+            if move.location not in ["left", "right"]:
                 raise InvalidMove("Can't move boat anywhere but left or right.")
-            self.boat_position = move.object
+            self.boat_position = move.location
         else:
-            if move.object not in ["boat", "shore"]:
-                raise InvalidMove("Can't move subjects anywhere but onto boat or shore.")
-            if move.object == "boat":
-                if len(self.boat) ==2:
+            if move.location not in ["boat", "shore"]:
+                raise InvalidMove("Can't move objects anywhere but onto boat or shore.")
+            if move.location == "boat":
+                if len(self.boat) >= self.boat_capacity:
                     raise InvalidMove("Boat is full.")
                 try:
                     if self.boat_position == "left":
-                        self.left_shore.remove(move.subject)
+                        self.left_shore.remove(move.object)
                     elif self.boat_position == "right":
-                        self.right_shore.remove(move.subject)
+                        self.right_shore.remove(move.object)
                 except ValueError as e:
-                    raise InvalidMove("Subject is not on the same shore as the boat or is already on boat.")
-                self.boat += [move.subject]
-            elif move.object == "shore":
-                if move.subject not in self.boat:
-                    raise InvalidMove("Subject is on the shore.")
-                self.boat.remove(move.subject)
+                    raise InvalidMove("Object is not on the same shore as the boat or is already on boat.")
+                self.boat += [move.object]
+            elif move.location == "shore":
+                if move.object not in self.boat:
+                    raise InvalidMove("Object is on the shore.")
+                self.boat.remove(move.object)
                 if self.boat_position == "left":
-                    self.left_shore += [move.subject]
+                    self.left_shore += [move.object]
                 elif self.boat_position == "right":
-                    self.right_shore += [move.subject]
+                    self.right_shore += [move.object]
             if self.right_shore.__contains__("man") \
                 and self.right_shore.__contains__("wolf") \
                 and self.right_shore.__contains__("goat") \
