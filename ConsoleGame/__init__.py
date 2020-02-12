@@ -22,7 +22,7 @@ class Move:
 
 class GameState:
     def __init__(self):
-        self.left_shore = ["man","wolf", "goat", "hay"]
+        self.left_shore = ["man", "wolf", "goat", "hay"]
         self.right_shore = []
         self.boat_position = "left"
         self.boat = []
@@ -43,23 +43,27 @@ class GameState:
                 raise InvalidMove("Can't move boat anywhere but left or right.")
             self.boat_position = move.object
         else:
-            if move.object == "onto boat":
+            if move.object not in ["boat", "shore"]:
+                raise InvalidMove("Can't move subjects anywhere but onto boat or shore.")
+            if move.object == "boat":
+                if len(self.boat) ==2:
+                    raise InvalidMove("Boat is full.")
                 try:
                     if self.boat_position == "left":
                         self.left_shore.remove(move.subject)
                     elif self.boat_position == "right":
                         self.right_shore.remove(move.subject)
                 except ValueError as e:
-                    raise InvalidMove("Subject was not on the same shore as the boat.")
+                    raise InvalidMove("Subject is not on the same shore as the boat or is already on boat.")
                 self.boat += [move.subject]
-            elif move.object == "off of boat":
+            elif move.object == "shore":
+                if move.subject not in self.boat:
+                    raise InvalidMove("Subject is on the shore.")
                 self.boat.remove(move.subject)
                 if self.boat_position == "left":
                     self.left_shore += [move.subject]
-                if self.boat_position == "right":
+                elif self.boat_position == "right":
                     self.right_shore += [move.subject]
-            else:
-                raise InvalidMove("Can't move items anywhere but onto or off of boat.")
             if self.right_shore == ["man","wolf", "goat", "hay"]:
                 print("GAME OVER!! YOU WON!!!")
 state = GameState()
