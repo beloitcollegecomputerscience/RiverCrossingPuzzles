@@ -64,9 +64,16 @@ class GameState:
                     self.left_shore += [move.subject]
                 elif self.boat_position == "right":
                     self.right_shore += [move.subject]
-            if self.right_shore == ["man","wolf", "goat", "hay"]:
-                print("GAME OVER!! YOU WON!!!")
+            if self.right_shore.__contains__("man") \
+                and self.right_shore.__contains__("wolf") \
+                and self.right_shore.__contains__("goat") \
+                and self.right_shore.__contains__("hay"):
+                    print("GAME OVER!! YOU WON!!!")
+
 state = GameState()
-while state.right_shore != ["man","wolf", "goat", "hay"]:
-    print(state.report())
-    state.apply_move(Move(input("move object> "), input("move to> ")))
+while not (state.right_shore.__contains__("man") \
+    and state.right_shore.__contains__("wolf") \
+    and state.right_shore.__contains__("goat") \
+    and state.right_shore.__contains__("hay")):
+        print(state.report())
+        state.apply_move(Move(input("move object> "), input("move to> ")))
