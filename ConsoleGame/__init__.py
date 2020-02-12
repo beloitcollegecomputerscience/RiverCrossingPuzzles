@@ -1,4 +1,12 @@
 #!/usr/bin/env python3
+
+# How to play:
+# When prompted, type an object name to move and press enter. 
+# Next type the location to move to and press enter again.
+# Objects: man, wolf, goat, hay, boat
+# Locations to move characters: boat, shore
+# Locations to move boat: left, right
+
 def report_shore(name, items):
     s = ""
     s += "On the " + name + ", there is "
