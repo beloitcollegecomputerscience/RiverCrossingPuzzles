@@ -62,7 +62,7 @@ def update(duration):
 		destination_2[0] += river
 		destination_3[0] += river + hor_gap * 2 + each_width * 2
 		destination_4[0] += river + hor_gap * 2 + each_width * 2
-		destination_boat[0] += 50
+		destination_boat[0] += 270
 		clicked = False
 
 	animate(sprite_1, destination_1, duration, velocity)
