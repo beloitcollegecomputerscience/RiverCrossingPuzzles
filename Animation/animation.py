@@ -2,24 +2,24 @@ import pyglet
 import time
 from pyglet.window import mouse
 
-img_1 = pyglet.resource.image("images/goat.png")
-img_2 = pyglet.resource.image("images/wolf.png")
-img_3 = pyglet.resource.image("images/farmer.png")
-img_4 = pyglet.resource.image("images/cabbage.png")
+img_goat = pyglet.resource.image("images/goat.png")
+img_wolf = pyglet.resource.image("images/wolf.png")
+img_farmer = pyglet.resource.image("images/farmer.png")
+img_cabbage = pyglet.resource.image("images/cabbage.png")
 img_background = pyglet.resource.image("images/background.png")
 img_boat = pyglet.resource.image("images/boat.png")
 
 background = pyglet.sprite.Sprite(img=img_background, x=0, y = 0)
 boat = pyglet.sprite.Sprite(img=img_boat, x=230, y = 150)
-sprite_1 = pyglet.sprite.Sprite(img=img_1, x=0, y = 450)
-sprite_2 = pyglet.sprite.Sprite(img=img_2, x=0, y = 450)
-sprite_3 = pyglet.sprite.Sprite(img=img_3, x=0, y = 450)
-sprite_4 = pyglet.sprite.Sprite(img=img_4, x=0, y = 450)
+sprite_goat = pyglet.sprite.Sprite(img=img_goat, x=0, y = 450)
+sprite_wolf = pyglet.sprite.Sprite(img=img_wolf, x=0, y = 450)
+sprite_farmer = pyglet.sprite.Sprite(img=img_farmer, x=0, y = 450)
+sprite_cabbage = pyglet.sprite.Sprite(img=img_cabbage, x=0, y = 450)
 
-sprite_1.scale = 0.15
-sprite_2.scale = 0.15
-sprite_3.scale = 0.15
-sprite_4.scale = 0.15
+sprite_goat.scale = 0.15
+sprite_wolf.scale = 0.15
+sprite_farmer.scale = 0.15
+sprite_cabbage.scale = 0.15
 boat.scale = 0.2
 
 river = 660
@@ -39,10 +39,10 @@ def on_draw():
 	window.clear()
 	background.draw()
 	boat.draw()
-	sprite_1.draw()
-	sprite_2.draw()
-	sprite_3.draw()
-	sprite_4.draw()
+	sprite_goat.draw()
+	sprite_wolf.draw()
+	sprite_farmer.draw()
+	sprite_cabbage.draw()
 @window.event
 def on_mouse_press(x, y, button, modifiers):
 	global global_state 
@@ -89,10 +89,11 @@ def update(duration):
 		destination_3_x += river + hor_gap * 2 + each_width * 2 + out_from_screen
 		destination_4_x += river + hor_gap * 2 + each_width * 2 + out_from_screen
 
-	is_animating_1 = animate(sprite_1, destination_1_x, destination_1_y, duration, velocity)
-	is_animating_2 = animate(sprite_2, destination_2_x, destination_2_y, duration, velocity)
-	is_animating_3 = animate(sprite_3, destination_3_x, destination_3_y, duration, velocity)
-	is_animating_4 = animate(sprite_4, destination_4_x, destination_4_y, duration, velocity)
+
+	is_animating_1 = animate(sprite_goat, destination_1_x, destination_1_y, duration, velocity)
+	is_animating_2 = animate(sprite_wolf, destination_2_x, destination_2_y, duration, velocity)
+	is_animating_3 = animate(sprite_farmer, destination_3_x, destination_3_y, duration, velocity)
+	is_animating_4 = animate(sprite_cabbage, destination_4_x, destination_4_y, duration, velocity)
 	# print(is_animating_1)
 	if global_state == 'clicked' and check_if_all_stopped(is_animating_1, is_animating_2, is_animating_3, is_animating_4):
 		global_state = 'timeout_before_win'
@@ -140,21 +141,21 @@ def timeout_ended(timeout_seconds):
 
 def reset_sprites_positions():
 	off_screen_y = 450
-	sprite_1.x = 0
-	sprite_1.y = off_screen_y
-	sprite_2.x = 0
-	sprite_2.y = off_screen_y
-	sprite_3.x = 0
-	sprite_3.y = off_screen_y
-	sprite_4.x = 0
-	sprite_4.y = off_screen_y
-	boat.x = 230
-	boat.y = 150
+	move_sprite_to(sprite_goat, 0, off_screen_y)
+	move_sprite_to(sprite_wolf, 0, off_screen_y)
+	move_sprite_to(sprite_farmer, 0, off_screen_y)
+	move_sprite_to(sprite_cabbage, 0, off_screen_y)
+	move_sprite_to(boat, 230, 150)
+
+def move_sprite_to(sprite, x, y):
+	sprite.x = x
+	sprite.y = y
+	return sprite
 
 def goat_clicked(x, y):
 	goat_collider_radius = 40
-	goat_center_x = sprite_1.x + goat_collider_radius
-	goat_center_y = sprite_1.y + goat_collider_radius
+	goat_center_x = sprite_goat.x + goat_collider_radius
+	goat_center_y = sprite_goat.y + goat_collider_radius
 	
 	if (abs(x - goat_center_x) < goat_collider_radius) and (abs(y - goat_center_y) < goat_collider_radius):
 		return True
