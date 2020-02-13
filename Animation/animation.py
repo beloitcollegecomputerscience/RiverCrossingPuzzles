@@ -32,10 +32,10 @@ each_height = 130
 each_width = 100
 clicked = False
 
+destination_1 = [hor_gap + each_width, large_bottom_margin + each_height + ver_gap] 
+destination_2 = [hor_gap + each_width, large_bottom_margin + each_height * 2 + ver_gap * 2]
 destination_3 = [hor_gap, small_bottom_margin + each_height * 2 + ver_gap * 2]
 destination_4 = [hor_gap, small_bottom_margin + each_height + ver_gap]
-destination_2 = [hor_gap + each_width, large_bottom_margin + each_height * 2 + ver_gap * 2]
-destination_1 = [hor_gap + each_width, large_bottom_margin + each_height + ver_gap] 
 destination_boat = [boat.x, boat.y]
 
 window = pyglet.window.Window(img_background.width, img_background.height)
