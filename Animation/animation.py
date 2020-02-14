@@ -2,32 +2,28 @@ import pyglet
 import time
 from pyglet.window import mouse
 
-'''
-This class creates a general layout that can be applied to all versions of the game. 
-Numerical names are used to serve that purpose.
-'''
-
-#TODO: add a function to allow user customize source images
-img_1 = pyglet.resource.image("images/goat.png")
-img_2 = pyglet.resource.image("images/wolf.png")
-img_3 = pyglet.resource.image("images/farmer.png")
-img_4= pyglet.resource.image("images/cabbage.png")
-img_background = pyglet.resource.image("images/background.png")
-img_boat = pyglet.resource.image("images/boat.png")
+images = {
+    "wolf": pyglet.resource.image("images/wolf.png"),
+    "goat": pyglet.resource.image("images/goat.png"),
+    "farmer": pyglet.resource.image("images/farmer.png"),
+    "cabbage": pyglet.resource.image("images/cabbage.png"),
+    "boat": pyglet.resource.image("images/boat.png"),
+    "background": pyglet.resource.image("images/background.png")
+}
 
 #These coordinates have been approved and can be used for any set of characters
-background = pyglet.sprite.Sprite(img=img_background, x=0, y = 0)
-boat = pyglet.sprite.Sprite(img=img_boat, x=230, y = 150)
-sprite_1 = pyglet.sprite.Sprite(img=img_1, x=0, y = 450)
-sprite_2 = pyglet.sprite.Sprite(img=img_2, x=0, y = 450)
-sprite_3 = pyglet.sprite.Sprite(img=img_3, x=0, y = 450)
-sprite_4 = pyglet.sprite.Sprite(img=img_4, x=0, y = 450)
+background = pyglet.sprite.Sprite(img=images["background"], x=0, y = 0)
+boat = pyglet.sprite.Sprite(img=images["boat"], x=230, y = 150)
+sprite_goat = pyglet.sprite.Sprite(img=images["goat"], x=0, y = 450)
+sprite_wolf = pyglet.sprite.Sprite(img=images["wolf"], x=0, y = 450)
+sprite_farmer = pyglet.sprite.Sprite(img=images["farmer"], x=0, y = 450)
+sprite_cabbage = pyglet.sprite.Sprite(img=images["cabbage"], x=0, y = 450)
 
 #These scales are based on original sizes of the source images. Be careful when use different images.
-sprite_1.scale = 0.15
-sprite_2.scale = 0.15
-sprite_3.scale = 0.15
-sprite_4.scale = 0.15
+sprite_goat.scale = 0.15
+sprite_wolf.scale = 0.15
+sprite_farmer.scale = 0.15
+sprite_cabbage.scale = 0.15
 boat.scale = 0.2
 
 #These values are true with any version of the game that has less than 6 characters and no island
@@ -42,16 +38,16 @@ each_width = 100
 global_state = 'initialized'
 last_time = 0
 
-window = pyglet.window.Window(img_background.width, img_background.height)
+window = pyglet.window.Window(images["background"].width, images["background"].height)
 @window.event
 def on_draw():
 	window.clear()
 	background.draw()
 	boat.draw()
-	sprite_1.draw()
-	sprite_2.draw()
-	sprite_3.draw()
-	sprite_4.draw()
+	sprite_goat.draw()
+	sprite_wolf.draw()
+	sprite_farmer.draw()
+	sprite_cabbage.draw()
 @window.event
 def on_mouse_press(x, y, button, modifiers):
 	global global_state 
@@ -68,17 +64,17 @@ def update(duration):
 	velocity = 300
 
 	if global_state != 'timeout_before_win':
-		destination_1 = [hor_gap + each_width, large_bottom_margin + each_height + ver_gap]
-		destination_2 = [hor_gap + each_width, large_bottom_margin + each_height * 2 + ver_gap * 2]
-		destination_3 = [hor_gap, small_bottom_margin + each_height * 2 + ver_gap * 2]
-		destination_4 = [hor_gap, small_bottom_margin + each_height + ver_gap]
+		destination_goat = [hor_gap + each_width, large_bottom_margin + each_height + ver_gap]
+		destination_wolf = [hor_gap + each_width, large_bottom_margin + each_height * 2 + ver_gap * 2]
+		destination_farmer = [hor_gap, small_bottom_margin + each_height * 2 + ver_gap * 2]
+		destination_cabbage = [hor_gap, small_bottom_margin + each_height + ver_gap]
 		destination_boat = [500, 150]
 
 	if global_state == 'clicked':
-		destination_1[0] += river
-		destination_2[0] += river
-		destination_3[0] += river + hor_gap * 2 + each_width * 2
-		destination_4[0] += river + hor_gap * 2 + each_width * 2
+		destination_goat[0] += river
+		destination_wolf[0] += river
+		destination_farmer[0] += river + hor_gap * 2 + each_width * 2
+		destination_cabbage[0] += river + hor_gap * 2 + each_width * 2
 		animate(boat, destination_boat, duration, velocity)
 
 	if global_state == 'timeout_before_win':
@@ -88,16 +84,15 @@ def update(duration):
 
 	if global_state == 'game_win':
 		out_from_screen = 300
-		destination_1[0] += river + out_from_screen
-		destination_2[0] += river + out_from_screen
-		destination_3[0] += river + hor_gap * 2 + each_width * 2 + out_from_screen
-		destination_4[0] += river + hor_gap * 2 + each_width * 2 + out_from_screen
+		destination_goat[0] += river + out_from_screen
+		destination_wolf[0] += river + out_from_screen
+		destination_farmer[0] += river + hor_gap * 2 + each_width * 2 + out_from_screen
+		destination_cabbage[0] += river + hor_gap * 2 + each_width * 2 + out_from_screen
 
-
-	is_animating_1 = animate(sprite_1, destination_1, duration, velocity)
-	is_animating_2 = animate(sprite_2, destination_2, duration, velocity)
-	is_animating_3 = animate(sprite_3, destination_3, duration, velocity)
-	is_animating_4 = animate(sprite_4, destination_4, duration, velocity)
+	is_animating_1 = animate(sprite_goat, destination_goat, duration, velocity)
+	is_animating_2 = animate(sprite_wolf, destination_wolf, duration, velocity)
+	is_animating_3 = animate(sprite_farmer, destination_farmer, duration, velocity)
+	is_animating_4 = animate(sprite_cabbage, destination_cabbage, duration, velocity)
 	# print(is_animating_1)
 	if global_state == 'clicked' and check_if_all_stopped(is_animating_1, is_animating_2, is_animating_3, is_animating_4):
 		global_state = 'timeout_before_win'
@@ -106,7 +101,6 @@ def update(duration):
 	if global_state == 'game_win' and check_if_all_stopped(is_animating_1, is_animating_2, is_animating_3, is_animating_4):
 		global_state = 'initialized'
 		reset_sprites_positions()
-		
 
 	# print(global_state)
 
@@ -145,10 +139,10 @@ def timeout_ended(timeout_seconds):
 
 def reset_sprites_positions():
 	off_screen_y = 450
-	move_sprite_to(sprite_1, 0, off_screen_y)
-	move_sprite_to(sprite_2, 0, off_screen_y)
-	move_sprite_to(sprite_3, 0, off_screen_y)
-	move_sprite_to(sprite_4, 0, off_screen_y)
+	move_sprite_to(sprite_goat, 0, off_screen_y)
+	move_sprite_to(sprite_wolf, 0, off_screen_y)
+	move_sprite_to(sprite_farmer, 0, off_screen_y)
+	move_sprite_to(sprite_cabbage, 0, off_screen_y)
 	move_sprite_to(boat, 230, 150)
 
 def move_sprite_to(sprite, x, y):
@@ -158,13 +152,12 @@ def move_sprite_to(sprite, x, y):
 
 def goat_clicked(x, y):
 	goat_collider_radius = 40
-	goat_center_x = sprite_1.x + goat_collider_radius
-	goat_center_y = sprite_1.y + goat_collider_radius
+	goat_center_x = sprite_goat.x + goat_collider_radius
+	goat_center_y = sprite_goat.y + goat_collider_radius
 	
 	if (abs(x - goat_center_x) < goat_collider_radius) and (abs(y - goat_center_y) < goat_collider_radius):
 		return True
 	return False
-
 
 if __name__ =='__main__':
 	pyglet.clock.schedule_interval(update, 1/200.0)
