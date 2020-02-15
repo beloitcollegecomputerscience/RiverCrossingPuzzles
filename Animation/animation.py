@@ -163,36 +163,6 @@ class Animation(pyglet.window.Window):
 			return True
 		return False
 
-def check_if_all_stopped(is_animating_1, is_animating_2, is_animating_3, is_animating_4):
-	still_animating = is_animating_1 or is_animating_2 or is_animating_3 or is_animating_4
-	return not still_animating
-
-def timeout_ended(timeout_seconds):
-	return (time.time() - last_time) > timeout_seconds
-
-def reset_sprites_positions():
-	off_screen_y = 450
-	move_sprite_to(sprite_goat, 0, off_screen_y)
-	move_sprite_to(sprite_wolf, 0, off_screen_y)
-	move_sprite_to(sprite_farmer, 0, off_screen_y)
-	move_sprite_to(sprite_cabbage, 0, off_screen_y)
-	move_sprite_to(boat, 230, 150)
-
-def move_sprite_to(sprite, x, y):
-	sprite.x = x
-	sprite.y = y
-	return sprite
-
-def goat_clicked(x, y):
-	goat_collider_radius = 40
-	goat_center_x = sprite_goat.x + goat_collider_radius
-	goat_center_y = sprite_goat.y + goat_collider_radius
-	
-	if (abs(x - goat_center_x) < goat_collider_radius) and (abs(y - goat_center_y) < goat_collider_radius):
-		return True
-	return False
-
-
 if __name__ =='__main__':
 	window = Animation()
 	pyglet.app.run()
