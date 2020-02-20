@@ -44,6 +44,9 @@ class Animation(pyglet.window.Window):
 		self.global_state = 'initialized'
 		self.last_time = 0
 
+		self.last_click = self.boat
+		self.clicked = False
+
 		pyglet.clock.schedule_interval(self.update, 1/200.0)
 
 	def on_draw(self):
@@ -61,7 +64,15 @@ class Animation(pyglet.window.Window):
 
 		if self.goat_clicked(x, y):
 			print("Goat was clicked")
+			self.clicked = True
+			self.last_click = self.sprite_goat
 		pass
+	    
+		if self.farmer_clicked(x,y):
+			print("Farmer was clicked")
+			self.clicked = True
+			self.last_click = self.sprite_farmer
+		pass		
 
 	def update(self, duration):
 		velocity = 300
@@ -75,11 +86,23 @@ class Animation(pyglet.window.Window):
 
 		# Positions of characters and boat on the right side of the river
 		if self.global_state == 'clicked':
-			self.destination_goat[0] += self.river
-			self.destination_wolf[0] += self.river
-			self.destination_farmer[0] += self.river + self.hor_gap * 2 + self.each_width * 2
-			self.destination_cabbage[0] += self.river + self.hor_gap * 2 + self.each_width * 2
-			self.animate(self.boat, self.destination_boat, duration, velocity)
+			if self.clicked and self.in_boat and self.boat.x < 500:
+				dstce = self.move_from_boat_to_right_shore(self.last_click)
+				#get distance to be moved/coordiantes of destination;
+				if self.last_click == self.sprite_goat:
+					self.destination_goat[0] += dstce
+				if self.last_click == self.sprite_farmer:
+					self.destination_farmer[0] += dstce
+			# if self.clicked and self.in_boat and self.boat.x < 500: #set to <500 only for testing
+			# 	self.destination_goat[0] += self.river
+			# if self.clicked and self.in_boat and self.boat.x <600:
+			#     self.destination_farmer[0] += self.river	
+					
+				else:
+					self.destination_wolf[0] += self.river
+					self.destination_farmer[0] += self.river + self.hor_gap * 2 + self.each_width * 2
+					self.destination_cabbage[0] += self.river + self.hor_gap * 2 + self.each_width * 2
+					self.animate(self.boat, self.destination_boat, duration, velocity)
 
 		if self.global_state == 'timeout_before_win':
 			if self.timeout_ended(1):
@@ -162,6 +185,26 @@ class Animation(pyglet.window.Window):
 		if (abs(x - goat_center_x) < goat_collider_radius) and (abs(y - goat_center_y) < goat_collider_radius):
 			return True
 		return False
+
+	def farmer_clicked(self,x, y):
+		farmer_collider_radius = 40
+		farmer_center_x = self.sprite_farmer.x + farmer_collider_radius
+		farmer_center_y = self.sprite_farmer.y + farmer_collider_radius
+
+		if (abs(x - farmer_center_x) < farmer_collider_radius) and (abs(y - farmer_center_y) < farmer_collider_radius):
+			return True
+		return False	
+
+	def in_boat(self, sprt):
+    		return True
+
+	def move_from_boat_to_right_shore(self, sprt):
+			if sprt == self.sprite_goat or sprt == self.sprite_wolf:
+    				return self.river
+			if sprt == self.sprite_farmer:
+    				return self.river
+			else:
+    				return 100
 
 if __name__ =='__main__':
 	window = Animation()
