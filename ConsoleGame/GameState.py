@@ -1,4 +1,5 @@
 from Move import InvalidMove
+import sys
 
 class GameState:
     def __init__(self):
@@ -7,6 +8,7 @@ class GameState:
         self.boat_position = "left"
         self.boat = []
         self.boat_capacity = 2
+        self.violationCombination={"wolf":"goat","goat":"hay"}
 
     def report(self):
         s = ""
@@ -16,6 +18,15 @@ class GameState:
         s += "The boat is on the " + self.boat_position + " shore."
         return s
 
+    def checkIfObjectsClash(self,location):
+        if 'man' not in location:
+            for object1 in self.violationCombination:
+                object2=self.violationCombination[object1]
+                if(object1 in location and object2 in location):
+                    print("%s and %s cannot be together"%(object1,object2))
+                    print("You lose!")
+                    sys.exit()
+
     def apply_move(self, move):
         if move.object not in self.boat + self.left_shore + self.right_shore + ["boat"]:
             raise InvalidMove("Unknown command object '" + move.object + "'.")
@@ -23,6 +34,9 @@ class GameState:
             if move.location not in ["left", "right"]:
                 raise InvalidMove("Can't move boat anywhere but left or right.")
             self.boat_position = move.location
+            self.checkIfObjectsClash(self.left_shore)
+            self.checkIfObjectsClash(self.right_shore)
+            self.checkIfObjectsClash(self.boat)
         else:
             if move.location not in ["boat", "shore"]:
                 raise InvalidMove("Can't move objects anywhere but onto boat or shore.")
