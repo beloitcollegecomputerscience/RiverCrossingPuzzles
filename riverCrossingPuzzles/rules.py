@@ -1,25 +1,14 @@
-'''
-Created on Oct 30, 2019
-
-@author: sauga, wadood, and mashfik
-'''
+'''Rules class'''
 
 class Rules:
+    def __init__(self, rules_file):
+        self.rules = {}
+        self.rules_file = rules_file
 
-    def __init__(self):
-        # Create an empty Rules object
-        self.rules = [] 
-
-    def Reader(self): 
-    # #open the Rules txt file
-    # f = open("Rules.txt","R" )
-    # if f.mode == "R":
-    #     #use the read() function to read the class
-    #     f1 = f.readlines()
-    #     for x in f1:
-    #         print()
-        pass
-             
-        
-
-            
+    def readRules(self):
+        # Read the rules file into dictionary
+        with open(self.rules_file) as rules_file:
+            for line in rules_file:
+                key, vals = line.split(':')
+                split_vals = [v.strip() for v in vals.split(',')]
+                self.rules[key] = split_vals
