@@ -7,3 +7,4 @@ from .EndGameTest import EndGameTest
 from .NewGameTest import NewGameTest
 from .SetNewGameTest import SetNewGameTest
 from .GUITest import GUITest
+from .RulesTest import RulesTest
