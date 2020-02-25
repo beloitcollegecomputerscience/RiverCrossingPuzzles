@@ -60,13 +60,16 @@ class Animation(pyglet.window.Window):
 		# print(global_state)
 		velocity = 300
 
+		if self.global_state == "won":
+			announcement = self.get_object_by_name("winning_announcement")
+			announcement["sprite"].group = pyglet.graphics.OrderedGroup(30)
+
 		for scene_object in self.scene_objects:
 			scene_object["is_animating"] = self.animate(scene_object["sprite"],	scene_object["current_destination"], 
 														duration, velocity)
 
 		if self.has_won():
-			print("Won!")
-			global_state = "won"
+			self.global_state = "won"
 
 	def animate(self, sprt, destination, duration, velocity):
 		if self.check_if_sprite_at_destination(sprt, destination):
@@ -293,9 +296,20 @@ class Animation(pyglet.window.Window):
 			{
 				"name": "background",
 				"image_filename": "background.png",
-				"draw_layer": 0,
+				"draw_layer": 5,
 				"initial_position": [0, 0],
 				"current_destination": [0, 0],
+				"initial_scale": 1,
+				"is_animating": False,
+				"is_character": False,
+				"radius": None
+			},
+			{
+				"name": "winning_announcement",
+				"image_filename": "you-win.png",
+				"draw_layer": 0,
+				"initial_position": [200, 180],
+				"current_destination": [200, 180],
 				"initial_scale": 1,
 				"is_animating": False,
 				"is_character": False,
