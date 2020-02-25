@@ -64,6 +64,10 @@ class Animation(pyglet.window.Window):
 			scene_object["is_animating"] = self.animate(scene_object["sprite"],	scene_object["current_destination"], 
 														duration, velocity)
 
+		if self.has_won():
+			print("Won!")
+			global_state = "won"
+
 	def animate(self, sprt, destination, duration, velocity):
 		if self.check_if_sprite_at_destination(sprt, destination):
 			return False
@@ -324,6 +328,16 @@ class Animation(pyglet.window.Window):
 					batch=self.main_batch,
 					group=pyglet.graphics.OrderedGroup(scene_object["draw_layer"]))
 			scene_object["sprite"].scale = scene_object["initial_scale"]
+
+	def on_left_side(self, sprt):
+		return sprt.x > 750
+
+	def has_won(self):
+		for scene_object in self.scene_objects:
+			if scene_object["is_character"]:
+				if self.on_left_side(scene_object["sprite"]) == False:
+					return False
+		return True
 
 if __name__ =='__main__':
 	window = Animation()
