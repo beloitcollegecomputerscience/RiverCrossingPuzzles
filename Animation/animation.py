@@ -61,7 +61,7 @@ class Animation(pyglet.window.Window):
 		velocity = 300
 
 		if self.global_state == "won":
-			self.announce_winner();
+			self.announce_winner()
 
 		for scene_object in self.scene_objects:
 			scene_object["is_animating"] = self.animate(scene_object["sprite"],	scene_object["current_destination"], 
@@ -94,10 +94,12 @@ class Animation(pyglet.window.Window):
 			return False
 		return True
 
-	def check_if_all_stopped(self, is_animating_1, is_animating_2, is_animating_3, is_animating_4):
-		# TODO: should be rewritten using the list approach
-		self.still_animating = is_animating_1 or is_animating_2 or is_animating_3 or is_animating_4
-		return not self.still_animating
+	def check_if_all_stopped(self):
+		for name in self.character_list:
+			character_object = self.get_object_by_name(name)
+			if character_object["is_animating"] == True:
+				return False
+		return True
 
 	def reset_sprites_positions(self):
 		# TODO: should be rewritten using the list approach
@@ -346,14 +348,15 @@ class Animation(pyglet.window.Window):
 					group=pyglet.graphics.OrderedGroup(scene_object["draw_layer"]))
 			scene_object["sprite"].scale = scene_object["initial_scale"]
 
-	def on_left_side(self, sprt):
-		return sprt.x > 750
-
 	def has_won(self):
-		for scene_object in self.scene_objects:
-			if scene_object["is_character"]:
-				if self.on_left_side(scene_object["sprite"]) == False:
-					return False
+		if self.check_if_all_stopped() == False:
+			return False
+		if self.get_number_of_boat_members() != 0:
+			return False
+		for name in self.character_list:
+			character_object = self.get_object_by_name(name)
+			if character_object["current_shore"] != "right_shore":
+				return False
 		return True
 
 if __name__ =='__main__':
