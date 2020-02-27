@@ -1,0 +1,12 @@
+items: man, wolf, goat, hay
+beginLeft: man, wolf, goat, hay, boat
+beginBoat:
+beginRight:
+landIncompatible: [wolf, goat, !man], [goat, hay, !man]
+boatIncompatible:
+boatOccupancy: 2
+teams:
+teamIncompatible:
+immovables:
+pilot: man
+isIsland: false
