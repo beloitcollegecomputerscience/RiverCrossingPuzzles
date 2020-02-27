@@ -10,6 +10,7 @@ from tests import EndGameTest
 from tests import NewGameTest
 from tests import SetNewGameTest
 from tests import GUITest
+from tests import RulesTest
 
 if __name__ == '__main__':
     unittest.main()
