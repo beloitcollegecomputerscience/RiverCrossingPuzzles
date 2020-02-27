@@ -7,6 +7,7 @@ class GameState:
         self.boat_position = "left"
         self.boat = []
         self.boat_capacity = 2
+        self.lose=False
         self.violationCombination={"wolf":"goat","goat":"hay"}
 
     def report(self):
@@ -22,9 +23,9 @@ class GameState:
             for object1 in self.violationCombination:
                 object2=self.violationCombination[object1]
                 if(object1 in location and object2 in location):
-                    print("%s and %s cannot be together"%(object1,object2))
-                    print("You lose!")
-                    sys.exit()
+                    print('%s ate the %s'%(object1,object2))
+                    self.lose=True
+                    return True
 
     def apply_move(self, move):
         if move.object not in self.boat + self.left_shore + self.right_shore + ["boat"]:
@@ -33,9 +34,10 @@ class GameState:
             if move.location not in ["left", "right"]:
                 raise InvalidMove("Can't move boat anywhere but left or right.")
             self.boat_position = move.location
-            self.checkIfObjectsClash(self.left_shore)
-            self.checkIfObjectsClash(self.right_shore)
-            self.checkIfObjectsClash(self.boat)
+            toCheck=[self.left_shore,self.right_shore,self.boat]
+            for location in toCheck:
+                if self.checkIfObjectsClash(location):
+                    break
         else:
             if move.location not in ["boat", "shore"]:
                 raise InvalidMove("Can't move objects anywhere but onto boat or shore.")
@@ -69,6 +71,10 @@ class GameState:
         # check if the set of items on the right shore is a subset of the set of
         # required items.
         return set(["man", "wolf", "goat", "hay"]).issubset(self.right_shore)
+
+    def lost(self):
+        #returns the lose variable which is 'false' when no clash between entities and 'True' otherwise
+        return self.lose
 
 def report_shore(name, items):
     "Return a sentence representing the items on the given logical shore."
