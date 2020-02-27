@@ -176,8 +176,7 @@ class Animation(pyglet.window.Window):
 			# centering the seat
 			boat_seat_offset_x += one_seat_size/2 - clicked_character["radius"]
 			self.set_character_destination_to_boat(clicked_character, boat_seat_offset_x, boat_seat_offset_y)
-			self.characters_on_board.update({character_name: seat_number})			
-		print("\nGoat was clicked")	
+			self.characters_on_board.update({character_name: seat_number})
 
 	def get_available_seat_number(self):
 		occupied_seats = self.characters_on_board.values()
@@ -185,7 +184,6 @@ class Animation(pyglet.window.Window):
 			if possible_seat not in occupied_seats:
 				return possible_seat
 		return None
-			
 
 	def boat_clicked(self, x, y):
 		boat_object = self.get_object_by_name("boat")
