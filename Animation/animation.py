@@ -120,11 +120,6 @@ class Animation(pyglet.window.Window):
 			character_object["current_destination"] = calculated_position
 			character_object["current_shore"] = self.global_state
 
-		# self.destination_goat = [self.hor_gap + self.each_width, self.large_bottom_margin + self.each_height + self.ver_gap]
-		# self.destination_wolf = [self.hor_gap + self.each_width, self.large_bottom_margin + self.each_height * 2 + self.ver_gap * 2]
-		# self.destination_farmer = [self.hor_gap, self.small_bottom_margin + self.each_height * 2 + self.ver_gap * 2]
-		# self.destination_cabbage = [self.hor_gap, self.small_bottom_margin + self.each_height + self.ver_gap]
-
 	# automatically calculates chequerwise positions for any new character 
 	def calculate_shore_position_slot(self, character_index):
 		character_index = character_index + 1 # starting with 1 and not with 0
