@@ -24,6 +24,7 @@ class GameState:
                 object2=self.violationCombination[object1]
                 if(object1 in location and object2 in location):
                     print('%s ate the %s'%(object1,object2))
+                    print('You lost :(')
                     self.lose=True
                     return True
 

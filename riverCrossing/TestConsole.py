@@ -1,7 +1,7 @@
 import unittest
 
-from Move import Move, InvalidMove
-from GameState import GameState
+from .Move import Move,InvalidMove
+from .GameState import GameState
 
 class TestGameState(unittest.TestCase):
     def test_boat_shore_to_shore(self):
@@ -29,7 +29,7 @@ class TestGameState(unittest.TestCase):
         state.apply_move(Move("boat", "right"))
         state.apply_move(Move("man", "shore"))
         state.apply_move(Move("wolf", "shore"))
-        self.assertEqual(state.right_shore, ["man","wolf", "goat", "hay"])    
+        self.assertEqual(state.has_won(), True)    
     
     def test_violating_conditions(self):
         state=GameState()
