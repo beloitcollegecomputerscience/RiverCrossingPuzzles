@@ -1,4 +1,4 @@
-from Move import InvalidMove
+from .Move import InvalidMove
 
 class GameState:
     def __init__(self):
