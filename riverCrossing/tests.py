@@ -1,7 +1,7 @@
 import unittest
 
-from Move import Move, InvalidMove
-from GameState import GameState
+from .Move import Move, InvalidMove
+from .GameState import GameState
 
 class TestGameState(unittest.TestCase):
     def test_boat_shore_to_shore(self):

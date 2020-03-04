@@ -12,7 +12,7 @@ if len(sys.argv) > 1:
 
 if game_to_play == "console":
     state = GameState()
-    while not state.has_won():
+    while not state.has_won() and not state.lost():
             print(state.report())
             state.apply_move(Move(input("move object> "), input("move to> ")))
 elif game_to_play == "gui":
