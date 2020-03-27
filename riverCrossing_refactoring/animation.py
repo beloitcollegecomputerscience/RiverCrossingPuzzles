@@ -169,9 +169,11 @@ class Animation(pyglet.window.Window):
 		character_name = clicked_character["name"]
 		character_is_in_boat = character_name in self.characters_on_board
 		if character_is_in_boat:
+		# Old code, can be replaced with the newly added remove_member function in boat class
 			self.set_character_destination_to_shore(clicked_character)
 			del self.characters_on_board[character_name]
 		else:
+		# Old code, can be replaced with the newly added add_member function in boat class
 			current_boat_members = self.get_number_of_boat_members()
 			if current_boat_members >= self.boat_capacity:
 				return
