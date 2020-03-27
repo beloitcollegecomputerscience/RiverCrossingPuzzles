@@ -41,7 +41,7 @@ class Animation(pyglet.window.Window):
 	def on_draw(self):
 		self.main_batch.draw()
 
-	def on_mouse_press(self,x, y, button, modifiers):
+	def on_mouse_press(self, x, y, button, modifiers):
 		if self.global_state == 'left_shore':
 			clicked_character = self.get_clicked_character(x, y)
 			if clicked_character != None:
@@ -187,6 +187,7 @@ class Animation(pyglet.window.Window):
 			self.set_character_destination_to_boat(clicked_character, boat_seat_offset_x, boat_seat_offset_y)
 			self.characters_on_board.update({character_name: seat_number})
 
+	""" All the methods below have been moved to boat class 
 	def get_available_seat_number(self):
 		occupied_seats = self.characters_on_board.values()
 		for possible_seat in range(self.boat_capacity):
@@ -225,6 +226,7 @@ class Animation(pyglet.window.Window):
 	def if_boat_has_driver(self):
 		driver_name = 'farmer'
 		return driver_name in self.characters_on_board
+		"""
 
 	def sprite_clicked_within_radius(self, x, y, sprite, collider_radius):
 		center_x = sprite.x + collider_radius

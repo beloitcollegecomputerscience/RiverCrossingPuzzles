@@ -3,34 +3,37 @@ import time
 import math
 import sys
 import pprint
+import animation
 
 class boat():
-	characters_on_board = {}
 	boat_capacity = 0
-	boat_has_driver = False
 	driver_name = ''
+	boat_has_driver = False
 	boat_state = 'left_shore'
+	characters_on_board = {}
+	boat_radius = 0
 
-	def __init__(boat_capacity, driver_name):
+	def __init__(boat_capacity, driver_name, boat_radius):
 		self.boat_capacity = boat_capacity
 		self.driver_name = driver_name
+		self.boat_radius = radius
+		self.animation = animation()
 
 	def add_member(character_name):
 		current_boat_members = self.get_number_of_boat_members()
 		if current_boat_members >= self.boat_capacity:
 			return
 		seat_number = self.get_available_seat_number()
-		boat_radius = self.get_object_by_name("boat")["radius"]
 		one_seat_size = (boat_radius * 2) / self.boat_capacity
 		boat_seat_offset_y = boat_radius/2
 		boat_seat_offset_x = (seat_number * one_seat_size)
 		# centering the seat
 		boat_seat_offset_x += one_seat_size/2 - clicked_character["radius"]
-		self.set_character_destination_to_boat(clicked_character, boat_seat_offset_x, boat_seat_offset_y)
+		self.animation.set_character_destination_to_boat(clicked_character, boat_seat_offset_x, boat_seat_offset_y)
 		self.characters_on_board.update({character_name: seat_number})
 
 	def remove_member(character_name):
-		self.set_character_destination_to_shore(clicked_character)
+		self.animation.set_character_destination_to_shore(clicked_character)
 		del self.characters_on_board[character_name]
 
 	def get_available_seat_number(self):
