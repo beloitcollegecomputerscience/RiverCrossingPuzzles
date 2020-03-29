@@ -3,7 +3,7 @@ import unittest
 from .Move import Move, InvalidMove
 from .GameState import GameState
 
-class TestGameState(unittest.TestCase):
+class MoveBoatTests(unittest.TestCase):
     def test_boat_shore_to_shore(self):
         state = GameState()
         self.assertEqual(state.boat_position, "left")
