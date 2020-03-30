@@ -6,18 +6,18 @@ import pprint
 import animation
 
 class boat():
-	boat_capacity = 0
-	driver_name = ''
-	boat_has_driver = False
-	boat_state = 'left_shore'
-	characters_on_board = {}
-	boat_radius = 0
 
-	def __init__(boat_capacity, driver_name, boat_radius):
+	def __init__(self, boat_capacity, driver_name, boat_radius, animation, gameState):
+		
+		self.animation = animation
+		self.gameState = gameState
+
 		self.boat_capacity = boat_capacity
 		self.driver_name = driver_name
 		self.boat_radius = radius
-		self.animation = animation()
+		self.boat_has_driver = False
+		self.characters_on_board = {}
+
 
 	def add_member(character_name):
 		current_boat_members = self.get_number_of_boat_members()
@@ -28,7 +28,7 @@ class boat():
 		boat_seat_offset_y = boat_radius/2
 		boat_seat_offset_x = (seat_number * one_seat_size)
 		# centering the seat
-		boat_seat_offset_x += one_seat_size/2 - clicked_character["radius"]
+		boat_seat_offset_x += one_seat_size/2 - self.animation.clicked_character["radius"]
 		self.animation.set_character_destination_to_boat(clicked_character, boat_seat_offset_x, boat_seat_offset_y)
 		self.characters_on_board.update({character_name: seat_number})
 
@@ -48,10 +48,10 @@ class boat():
 		if not self.is_allowed_to_ride():
 			return		
 		if direction == -1:
-			self.boat_state = 'left_shore'
+			self.gameState.global_state = 'left_shore'
 		elif direction == 1:
-			self.boat_state = 'right_shore'
-		self.set_destinations_to_other_shore(direction)
+			self.gameState.global_state = 'right_shore'
+		self.animation.set_destinations_to_other_shore(direction)
 
 	def is_allowed_to_ride(self):
 		number_of_boat_members = self.get_number_of_boat_members()

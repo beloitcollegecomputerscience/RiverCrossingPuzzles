@@ -10,10 +10,12 @@ class Animation(pyglet.window.Window):
 	This class creates a general layout that can be applied to all versions of the game 
 	with less than 6 characters and no island. Modify images to set up new games.
 	"""
-	def __init__(self):
+	def __init__(self, boat, gameState):
+
+		self.boat = boat
+		self.gameState = gameState
 
 		self.images_folder = "images/"
-
 		self.scene_objects = self.get_scene_objects()
 		self.init_sprites()
 		background_image = self.get_object_by_name("background")["image"]
@@ -38,6 +40,7 @@ class Animation(pyglet.window.Window):
 		self.set_initial_destinations()
 		pyglet.clock.schedule_interval(self.update, 1/200.0)
 
+	""" The 2 methods below have been moved to GUI 
 	def on_draw(self):
 		self.main_batch.draw()
 
@@ -55,6 +58,7 @@ class Animation(pyglet.window.Window):
 				self.process_clicked_character(x, y, clicked_character)
 			elif self.boat_clicked(x, y):
 				self.boat_try_ride(-1, x, y)
+	"""
 
 	def update(self, duration):
 		# print(global_state)
@@ -187,18 +191,17 @@ class Animation(pyglet.window.Window):
 			self.set_character_destination_to_boat(clicked_character, boat_seat_offset_x, boat_seat_offset_y)
 			self.characters_on_board.update({character_name: seat_number})
 
-	""" All the methods below have been moved to boat class 
+	def boat_clicked(self, x, y):
+		boat_object = self.get_object_by_name("boat")
+		boat_collider_radius = boat_object["radius"]		
+		return self.sprite_clicked_within_radius(x, y, boat_object["sprite"], boat_collider_radius)
+	""" The 6 methods below have been moved to boat class 
 	def get_available_seat_number(self):
 		occupied_seats = self.characters_on_board.values()
 		for possible_seat in range(self.boat_capacity):
 			if possible_seat not in occupied_seats:
 				return possible_seat
 		return None
-
-	def boat_clicked(self, x, y):
-		boat_object = self.get_object_by_name("boat")
-		boat_collider_radius = boat_object["radius"]		
-		return self.sprite_clicked_within_radius(x, y, boat_object["sprite"], boat_collider_radius)
 
 	def boat_try_ride(self, direction, x, y):
 		print('\nBoat was clicked, trying to ride!')
@@ -226,7 +229,7 @@ class Animation(pyglet.window.Window):
 	def if_boat_has_driver(self):
 		driver_name = 'farmer'
 		return driver_name in self.characters_on_board
-		"""
+	"""
 
 	def sprite_clicked_within_radius(self, x, y, sprite, collider_radius):
 		center_x = sprite.x + collider_radius
@@ -344,6 +347,9 @@ class Animation(pyglet.window.Window):
 					batch=self.main_batch,
 					group=pyglet.graphics.OrderedGroup(scene_object["draw_layer"]))
 			scene_object["sprite"].scale = scene_object["initial_scale"]
+
+	def get_main_batch(self):
+		return main_batch;
 
 	def has_won(self):
 		if self.check_if_all_stopped() == False:
