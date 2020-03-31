@@ -1,26 +1,54 @@
-#Pathik and Jamie
-#@28th October, 2019
+# Pathik and Jamie
+# @28th October, 2019
 import unittest
-from riverCrossingPuzzles import Control
-    
-#checks if the setNewGame method from the Control class sends a game name to the Rules class
-class NewGameTest(unittest.TestCase):
-    print("start test")
-    def test_load(self):
-        gameName = 5
-        temp = Control(gameName)
-        #checks if load method has a gameName that is chosen
-        self.assertIsNotNone(temp.load().gameName, msg='Load method has no game name')
-        print("first test")
-        
-    print('between tests 1')
+from riverCrossing import GameState
 
-    def test_setNewGame(self):
-        gameName = 5
-        temp = Control(gameName)
-        #checks if setNewGame method has a gameName to send
-        self.assertIsNotNone(gameName, msg='setNewGame method has no game name ')
-        print("second test")
-        self.assertEqual(gameName, temp.setNewGame().gameName, msg='the Load method and setNewGame method have different or no game names')
-        print("third test")
-    print("end test")
+
+# this test only applies to the man-goat-hay game;
+# change pending: after rules can be imported, initiate temp with correct parameters;
+
+class NewGameTest(unittest.TestCase):
+    print("start new game test")
+
+    def test_left_shore(self):
+        # checks if left shore has all the characters
+        temp = GameState()
+        shoreCapacity = len(temp.left_shore)
+        self.assertEqual(shoreCapacity, len(temp.left_shore))
+        self.assertEqual(temp.left_shore[0], "man")
+        self.assertEqual(temp.left_shore[1], "wolf")
+        self.assertEqual(temp.left_shore[2], "goat")
+        self.assertEqual(temp.left_shore[3], "hay")
+
+    def test_right_shore(self):
+        # checks if right shore is empty
+        temp = GameState()
+        self.assertEqual(len(temp.right_shore), 0, msg='right shore is not empty')
+
+    # checks if boat starts at left shore
+    def test_boat_position(self):
+        state = GameState()
+        self.assertEqual(state.boat_position, "left")
+
+    # checks if boat is empty
+    def test_boat(self):
+        temp = GameState()
+        self.assertEqual(len(temp.boat), 0, msg='boat is not empty')
+        print("first test")
+
+    # check if boat capacity is loaded correctly
+    def test_boat_capacity(self):
+        temp = GameState()
+        self.assertEqual(temp.boat_capacity, 2, msg='boat capacity is incorrect')
+
+    # check if default case is false
+    def test_lose(self):
+        temp = GameState()
+        self.assertTrue(not temp.lose)
+
+    def test_violationCombination(self):
+        temp = GameState()
+        self.assertEqual(temp.violationCombination["wolf"], "goat")
+        self.assertEqual(temp.violationCombination["goat"], "hay")
+
+    print("end new game test")
