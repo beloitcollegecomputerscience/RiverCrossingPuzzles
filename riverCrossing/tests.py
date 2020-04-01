@@ -2,6 +2,12 @@ import unittest
 
 from .Move import Move, InvalidMove
 from .GameState import GameState
+from .SceneState import SceneState
+from .Animation import Animation
+from .Boat import Boat
+from .GUI import GUI
+from .Rules import Rules
+import sys
 
 class TestGameState(unittest.TestCase):
     def test_boat_shore_to_shore(self):
@@ -15,4 +21,92 @@ class TestGameState(unittest.TestCase):
         move = Move("boat", "left")
         state.apply_move(move)
         self.assertEqual(state.boat_position, "left")
+
+    # Tests for boat class
+    def test_boat_add_member(self):
+    	rules = Rules("rules.json").rules  # "farmer, goat, wolf, and hay" variation
+    	scene_state = SceneState(rules)
+    	animation = Animation(scene_state)
+    	animation.boat = Boat(rules["boat_capacity"], rules["driver_name"],
+                          scene_state.get_object_by_name("boat")["radius"], animation, scene_state)
+
+    	self.assertEqual(animation.boat.if_boat_has_driver(), False)
+    	self.assertEqual(animation.boat.get_number_of_boat_members(), 0)
+    	self.assertEqual(animation.boat.is_allowed_to_ride(), False)
+
+    	animation.boat.add_member("farmer") # add driver
+    	self.assertEqual(animation.boat.if_boat_has_driver(), True)
+    	self.assertEqual(animation.boat.get_number_of_boat_members(), 1)
+    	self.assertEqual(animation.boat.is_allowed_to_ride(), True)
+
+    	animation.boat.add_member("goat") # add second member
+    	self.assertEqual(animation.boat.if_boat_has_driver(), True)
+    	self.assertEqual(animation.boat.get_number_of_boat_members(), 2)
+    	self.assertEqual(animation.boat.is_allowed_to_ride(), True)
+
+    	animation.boat.add_member("wolf") # add third member (overload, should refuse)
+    	self.assertEqual(animation.boat.if_boat_has_driver(), True)
+    	self.assertEqual(animation.boat.get_number_of_boat_members(), 2)
+    	self.assertEqual(animation.boat.is_allowed_to_ride(), True)
+
+    def test_boat_remove_member(self):
+    	rules = Rules("rules.json").rules  # "farmer, goat, wolf, and hay" variation
+    	scene_state = SceneState(rules)
+    	animation = Animation(scene_state)
+    	animation.boat = Boat(rules["boat_capacity"], rules["driver_name"],
+                          scene_state.get_object_by_name("boat")["radius"], animation, scene_state)
+
+    	animation.boat.add_member("farmer") # add driver
+    	animation.boat.add_member("goat") # add second member
+    	self.assertEqual(animation.boat.if_boat_has_driver(), True)
+    	self.assertEqual(animation.boat.get_number_of_boat_members(), 2)
+    	self.assertEqual(animation.boat.is_allowed_to_ride(), True)
+
+    	animation.boat.remove_member("goat") # remove a passenger
+    	self.assertEqual(animation.boat.if_boat_has_driver(), True)
+    	self.assertEqual(animation.boat.get_number_of_boat_members(), 1)
+    	self.assertEqual(animation.boat.is_allowed_to_ride(), True)
+
+    	animation.boat.remove_member("farmer") # remove driver
+    	self.assertEqual(animation.boat.if_boat_has_driver(), False)
+    	self.assertEqual(animation.boat.get_number_of_boat_members(), 0)
+    	self.assertEqual(animation.boat.is_allowed_to_ride(), False)
+
+    	animation.boat.remove_member("wolf") # remove character that isn't on boat, should refuse
+    	self.assertEqual(animation.boat.if_boat_has_driver(), False)
+    	self.assertEqual(animation.boat.get_number_of_boat_members(), 0)
+    	self.assertEqual(animation.boat.is_allowed_to_ride(), False)
+
+    def test_boat_get_available_seat_number(self):
+    	rules = Rules("rules.json").rules  # "farmer, goat, wolf, and hay" variation
+    	scene_state = SceneState(rules)
+    	animation = Animation(scene_state)
+    	animation.boat = Boat(rules["boat_capacity"], rules["driver_name"],
+                          scene_state.get_object_by_name("boat")["radius"], animation, scene_state)
+
+    	self.assertEqual(animation.boat.get_available_seat_number(), 0)
+    	animation.boat.add_member("farmer")
+    	self.assertEqual(animation.boat.get_available_seat_number(), 1)
+    	animation.boat.add_member("goat") # overload, should refuse
+    	self.assertEqual(animation.boat.get_available_seat_number(), None)
+
+    def test_boat_try_ride(self):
+    	rules = Rules("rules.json").rules  # "farmer, goat, wolf, and hay" variation
+    	scene_state = SceneState(rules)
+    	animation = Animation(scene_state)
+    	animation.boat = Boat(rules["boat_capacity"], rules["driver_name"],
+                          scene_state.get_object_by_name("boat")["radius"], animation, scene_state)
+
+    	# allow to ride - boat_position should change according to the direction
+    	animation.boat.add_member("farmer")
+    	animation.boat.boat_try_ride(1, 0, 0)
+    	self.assertEqual(scene_state.boat_position, "right")
+    	animation.boat.boat_try_ride(-1, 0, 0)
+    	self.assertEqual(scene_state.boat_position, "left")
+
+    	# not allow to ride - boat_position should remain left
+    	animation.boat.remove_member("farmer")
+    	animation.boat.boat_try_ride(1, 0, 0)
+    	self.assertEqual(scene_state.boat_position, "left")
+
 
