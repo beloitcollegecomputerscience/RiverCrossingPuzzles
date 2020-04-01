@@ -90,14 +90,14 @@ class TestGameState(unittest.TestCase):
 
 		# allow to ride - boat_position should change according to the direction
 		animation.boat.add_member("farmer")
-		animation.boat.boat_try_ride(1, 0, 0)
+		animation.boat.boat_try_ride(1)
 		self.assertEqual(scene_state.boat_position, "right")
-		animation.boat.boat_try_ride(-1, 0, 0)
+		animation.boat.boat_try_ride(-1)
 		self.assertEqual(scene_state.boat_position, "left")
 
 		# not allow to ride - boat_position should remain left
 		animation.boat.remove_member("farmer")
-		animation.boat.boat_try_ride(1, 0, 0)
+		animation.boat.boat_try_ride(1)
 		self.assertEqual(scene_state.boat_position, "left")
 
 	def test_is_any_rule_violated(self):
@@ -112,7 +112,7 @@ class TestGameState(unittest.TestCase):
 		self.assertEqual(animation.boat.is_any_rule_violated(1), False)
 		self.assertEqual(animation.boat.is_any_rule_violated(-1), False)
 
-		animation.boat.boat_try_ride(1, 0, 0)
+		animation.boat.boat_try_ride(1)
 
 		self.assertEqual(animation.boat.is_any_rule_violated(1), True)
 		self.assertEqual(animation.boat.is_any_rule_violated(-1), False)
