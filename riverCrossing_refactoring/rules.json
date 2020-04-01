@@ -83,7 +83,7 @@
 			},
             {
 				"name": "game_over_announcement",
-				"image_filename": "game_over.png",
+				"image_filename": "game-over.png",
 				"draw_layer": 0,
 				"initial_position": [200, 180],
 				"current_destination": [200, 180],
