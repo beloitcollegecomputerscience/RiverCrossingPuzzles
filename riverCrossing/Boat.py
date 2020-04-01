@@ -38,7 +38,7 @@ class Boat:
         return None
 
 
-    def boat_try_ride(self, direction, x, y):
+    def boat_try_ride(self, direction):
         print('\nBoat was clicked, trying to ride!')
         if not self.is_allowed_to_ride():
             return
