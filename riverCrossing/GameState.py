@@ -51,11 +51,11 @@ class GameState:
                     elif self.boat_position == "right":
                         self.right_shore.remove(move.object)
                 except ValueError as e:
-                    raise InvalidMove("Object is not on the same shore as the boat or is already on boat.")
+                    raise InvalidMove("Object " + move.object + " is not on the same shore as the boat or is already on boat.")
                 self.boat += [move.object]
             elif move.location == "shore":
                 if move.object not in self.boat:
-                    raise InvalidMove("Object is on the shore.")
+                    raise InvalidMove("Object " + move.object + " is on the shore already.")
                 self.boat.remove(move.object)
                 if self.boat_position == "left":
                     self.left_shore += [move.object]
@@ -73,8 +73,10 @@ class GameState:
         # required items.
         return set(["man", "wolf", "goat", "hay"]).issubset(self.right_shore)
 
-    def lost(self):
-        #returns the lose variable which is 'false' when no clash between entities and 'True' otherwise
+    def has_lost(self):
+        "Returns true if the game is lost and false otherwise."
+        #returns the lose variable which is 'false' when no clash between entities
+        #and 'True' otherwise
         return self.lose
 
 def report_shore(name, items):
