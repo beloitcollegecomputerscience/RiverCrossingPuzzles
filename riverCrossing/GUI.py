@@ -23,15 +23,15 @@ class GUI(pyglet.window.Window):
         if self.scene_state.boat_position == 'left':
             clicked_character = self.get_clicked_character(x, y)
             if clicked_character is not None:
-                self.process_clicked_character(x, y, clicked_character)
+                self.process_clicked_character(clicked_character)
             elif self.boat_clicked(x, y):
-                self.boat.boat_try_ride(1, x, y)
+                self.boat.boat_try_ride(1)
         elif self.scene_state.boat_position == 'right':
             clicked_character = self.get_clicked_character(x, y)
             if clicked_character is not None:
-                self.process_clicked_character(x, y, clicked_character)
+                self.process_clicked_character(clicked_character)
             elif self.boat_clicked(x, y):
-                self.boat.boat_try_ride(-1, x, y)
+                self.boat.boat_try_ride(-1)
 
 
     def get_clicked_character(self, x, y):
@@ -45,7 +45,7 @@ class GUI(pyglet.window.Window):
         return None
 
 
-    def process_clicked_character(self, x, y, clicked_character):
+    def process_clicked_character(self, clicked_character):
         character_name = clicked_character["name"]
         character_is_in_boat = character_name in self.scene_state.characters_on_board
         if character_is_in_boat:
