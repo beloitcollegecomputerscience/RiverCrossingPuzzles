@@ -9,7 +9,7 @@ class GUI(pyglet.window.Window):
 
         background_image = self.scene_state.get_object_by_name("background")["image"]
         pyglet.window.Window.__init__(self, width=background_image.width,
-                                      height=background_image.height, caption="River crossing puzzle")
+                                      height=background_image.height, caption="River Crossing Puzzle")
 
 
     def on_draw(self):

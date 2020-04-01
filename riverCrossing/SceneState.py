@@ -48,6 +48,7 @@ class SceneState:
         return None
 
 
+    # Check if the player has won based on several conditions
     def has_won(self, all_stopped, boat_members):
         if not all_stopped:
             return False

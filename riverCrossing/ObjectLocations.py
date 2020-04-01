@@ -1,7 +1,7 @@
 class ObjectLocations:
     """
     This class creates a general layout that can be applied to all versions of the game
-    with less than 6 characters and no island. Modify images to set up new games.
+    with or less than 6 characters and no island. Modify images to set up new games.
     """
 
     def __init__(self, scene_state):
