@@ -112,7 +112,7 @@ class TestGameState(unittest.TestCase):
 
 	def test_has_won(self):
 		rules, scene_state, animation, animation.boat = self.set_up_GUI_game()
-        
+
 		self.assertEqual(scene_state.has_won(True, 0), False) # no one on right shore
 
 		for name in scene_state.get_character_list(): # put all characters on right shore
@@ -122,3 +122,15 @@ class TestGameState(unittest.TestCase):
 		self.assertEqual(scene_state.has_won(True, 1), False)
 		self.assertEqual(scene_state.has_won(False, 0), False)
 		self.assertEqual(scene_state.has_won(True, 0), True)
+
+	#Tests for ObjectLocation
+	def test_set_destinations_to_other_shore(self):
+		rules, scene_state, animation, animation.boat = self.set_up_GUI_game()
+
+		scene_state.object_locations.set_destinations_to_other_shore(1)
+		for character_name in scene_state.object_locations.character_list:
+			if character_name in scene_state.characters_on_board:
+				character_object = scene_state.get_object_by_name(character_name)
+				self.assertEqual(character_object["current_destination"][0], scene_state.object_locations.river_boat_travel_distance)
+				self.assertEqual(character_object["current_shore"], scene_state.boat_position)
+
