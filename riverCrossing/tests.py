@@ -100,6 +100,24 @@ class TestGameState(unittest.TestCase):
 		animation.boat.boat_try_ride(1, 0, 0)
 		self.assertEqual(scene_state.boat_position, "left")
 
+	def test_is_any_rule_violated(self):
+		rules, scene_state, animation, animation.boat = self.set_up_GUI_game()
+
+		self.assertEqual(animation.boat.is_any_rule_violated(1), False)
+		self.assertEqual(animation.boat.is_any_rule_violated(-1), False)
+
+		animation.boat.add_member("farmer")
+		animation.boat.add_member("hay")
+
+		self.assertEqual(animation.boat.is_any_rule_violated(1), False)
+		self.assertEqual(animation.boat.is_any_rule_violated(-1), False)
+
+		animation.boat.boat_try_ride(1, 0, 0)
+
+		self.assertEqual(animation.boat.is_any_rule_violated(1), True)
+		self.assertEqual(animation.boat.is_any_rule_violated(-1), False)
+
+
 	# Tests for SceneState
 	def test_get_character_list(self):
 		rules, scene_state, animation, animation.boat = self.set_up_GUI_game()
@@ -133,4 +151,6 @@ class TestGameState(unittest.TestCase):
 				character_object = scene_state.get_object_by_name(character_name)
 				self.assertEqual(character_object["current_destination"][0], scene_state.object_locations.river_boat_travel_distance)
 				self.assertEqual(character_object["current_shore"], scene_state.boat_position)
+
+
 
