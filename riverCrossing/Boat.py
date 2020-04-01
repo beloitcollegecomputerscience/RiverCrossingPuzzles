@@ -25,6 +25,8 @@ class Boat:
 
 
     def remove_member(self, character_name):
+        if character_name not in self.scene_state.characters_on_board:
+            return
         character_object = self.scene_state.get_object_by_name(character_name)
         self.scene_state.object_locations.set_character_destination_to_shore(character_object)
         del self.scene_state.characters_on_board[character_name]
