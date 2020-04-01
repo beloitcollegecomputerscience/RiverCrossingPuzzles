@@ -21,7 +21,7 @@ if game_to_play == "console":
             state.apply_move(Move(input("move object> "), input("move to> ")))
 elif game_to_play == "gui":
     # Play the "farmer, goat, wolf, and hay" variation of the game
-    rules = Rules("rules.json").rules
+    rules = Rules("config_01.json").rules
     scene_state = SceneState(rules)
     animation = Animation(scene_state)
     animation.boat = Boat(rules["boat_capacity"], rules["driver_name"],
