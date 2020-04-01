@@ -109,4 +109,37 @@ class TestGameState(unittest.TestCase):
     	animation.boat.boat_try_ride(1, 0, 0)
     	self.assertEqual(scene_state.boat_position, "left")
 
+    # Tests for SceneState
+    def test_get_character_list(self):
+        rules = Rules("rules.json").rules  # "farmer, goat, wolf, and hay" variation
+        scene_state = SceneState(rules)
+        animation = Animation(scene_state)
+        animation.boat = Boat(rules["boat_capacity"], rules["driver_name"],
+                          scene_state.get_object_by_name("boat")["radius"], animation, scene_state)
+        self.assertEqual(len(scene_state.get_character_list()), 4)
 
+    def test_get_object_by_name(self):
+        rules = Rules("rules.json").rules  # "farmer, goat, wolf, and hay" variation
+        scene_state = SceneState(rules)
+        animation = Animation(scene_state)
+        animation.boat = Boat(rules["boat_capacity"], rules["driver_name"],
+                          scene_state.get_object_by_name("boat")["radius"], animation, scene_state)
+        farmer = scene_state.get_object_by_name("farmer")
+        self.assertEqual(farmer["name"], "farmer")
+
+    def test_has_won(self):
+        rules = Rules("rules.json").rules  # "farmer, goat, wolf, and hay" variation
+        scene_state = SceneState(rules)
+        animation = Animation(scene_state)
+        animation.boat = Boat(rules["boat_capacity"], rules["driver_name"],
+                          scene_state.get_object_by_name("boat")["radius"], animation, scene_state)
+
+        self.assertEqual(scene_state.has_won(True, 0), False) # no one on right shore
+
+        for name in scene_state.get_character_list(): # put all characters on right shore
+            character_object = scene_state.get_object_by_name(name)
+            character_object["current_shore"] = "right"
+
+        self.assertEqual(scene_state.has_won(True, 1), False)
+        self.assertEqual(scene_state.has_won(False, 0), False)
+        self.assertEqual(scene_state.has_won(True, 0), True)
