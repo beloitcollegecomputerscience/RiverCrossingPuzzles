@@ -1,7 +1,7 @@
 {
 	"boat_capacity": 2,
 	"driver_name": "farmer",
-    	"violations": [ ["goat", "wolf"], ["goat", "hay"] ],
+	"violations": [ ["goat", "wolf"], ["goat", "hay"] ],
 	"scene_objects":
 		[
 			{
@@ -81,7 +81,7 @@
 				"is_character": false,
 				"radius": null
 			},
-            		{
+			{
 				"name": "game_over_announcement",
 				"image_filename": "game-over.png",
 				"draw_layer": 0,

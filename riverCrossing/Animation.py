@@ -14,7 +14,6 @@ class Animation:
 
 
     def update(self, duration):
-        # print(self.scene_state.boat_position)
         velocity = 300
 
         if self.scene_state.game_state == "win":

@@ -14,7 +14,7 @@ class Rules:
         self.rules_file = working_dir + "/" + rules_file
 
         self.rules = self.readJsonRules()
-        # output rules
+        # output current rules
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(self.rules)
 

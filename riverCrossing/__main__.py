@@ -27,5 +27,4 @@ elif game_to_play == "gui":
     animation.boat = Boat(rules["boat_capacity"], rules["driver_name"],
                           scene_state.get_object_by_name("boat")["radius"], animation, scene_state)
     window = GUI(animation)
-
     pyglet.app.run()

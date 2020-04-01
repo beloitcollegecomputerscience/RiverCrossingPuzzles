@@ -78,6 +78,7 @@ class Boat:
             if check_shore == character_object["current_shore"]:
                 characters_left.append(character_name)
 
+        # Check if any characters left on the shore correspond to the violating combinations
         for violation in violations:
             if set(characters_left) == set(violation):
                 return True
