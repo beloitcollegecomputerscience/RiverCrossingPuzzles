@@ -1,0 +1,96 @@
+{
+	"boat_capacity": 2,
+	"driver_name": "farmer",
+    "violations": [ ["goat", "wolf"], ["goat", "hay"] ],
+	"scene_objects":
+		[
+			{
+				"name": "farmer",
+				"image_filename": "farmer.png",
+				"draw_layer": 20,
+				"initial_position": [0, 450],
+				"current_destination": [0, 0],
+				"initial_scale": 0.15,
+				"is_animating": false,
+				"is_character": true,
+				"radius": 40
+			},			
+			{
+				"name": "wolf",
+				"image_filename": "wolf.png",
+				"draw_layer": 20,
+				"initial_position": [0, 450],
+				"current_destination": [0, 0],
+				"initial_scale": 0.15,
+				"is_animating": false,
+				"is_character": true,
+				"radius": 55
+			},
+			{
+				"name": "goat",
+				"image_filename": "goat.png",
+				"draw_layer": 20,
+				"initial_position": [0, 450],
+				"current_destination": [0, 0],
+				"initial_scale": 0.15,
+				"is_animating": false,
+				"is_character": true,
+				"radius": 40
+			},
+			{
+				"name": "hay",
+				"image_filename": "hay.png",
+				"draw_layer": 20,
+				"initial_position": [0, 450],
+				"current_destination": [0, 0],
+				"initial_scale": 0.15,
+				"is_animating": false,
+				"is_character": true,
+				"radius": 40
+			},
+			{
+				"name": "boat",
+				"image_filename": "boat.png",
+				"draw_layer": 10,
+				"initial_position": [270,218],
+				"current_destination": [0, 0],
+				"initial_scale": 0.2,
+				"is_animating": false,
+				"is_character": false,
+				"radius": 75
+			},
+			{
+				"name": "background",
+				"image_filename": "background.png",
+				"draw_layer": 5,
+				"initial_position": [0, 0],
+				"current_destination": [0, 0],
+				"initial_scale": 1,
+				"is_animating": false,
+				"is_character": false,
+				"radius": null
+			},
+			{
+				"name": "winning_announcement",
+				"image_filename": "you-win.png",
+				"draw_layer": 0,
+				"initial_position": [200, 180],
+				"current_destination": [200, 180],
+				"initial_scale": 1,
+				"is_animating": false,
+				"is_character": false,
+				"radius": null
+			},
+            {
+				"name": "game_over_announcement",
+				"image_filename": "game_over.png",
+				"draw_layer": 0,
+				"initial_position": [200, 180],
+				"current_destination": [200, 180],
+				"initial_scale": 1,
+				"is_animating": false,
+				"is_character": false,
+				"radius": null
+			}
+		]
+}
