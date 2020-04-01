@@ -2,12 +2,6 @@ import unittest
 from riverCrossing import Move, InvalidMove, GameState
 
 class WolfGoatHayHighLevel(unittest.TestCase):
-    def test_select_game(self):
-        """Select the Wolf/Goat/Hay game. This tests a speculative mechanism,
-        and may need to be changed!"""
-        state = GameState.select_game("wolf_goat_hay")
-        self.assertEqual(state.game(), "wolf_goat_hay")
-
     def test_wolf_goat_violation(self):
         "The player should lose if the wolf and goat are alone."
         state = GameState()

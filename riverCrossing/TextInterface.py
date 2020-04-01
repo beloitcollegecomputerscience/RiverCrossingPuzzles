@@ -3,11 +3,13 @@ from . import InvalidMove, GameState, Move
 class TextInterface:
     """Analagous to the GUI class, TextInterface drives a GameState
     with text printing of results and text inputs."""
-    def __init__(self):
+    def __init__(self, game_to_play="wolf_goat_hay"):
         self.game_state = GameState()
+        self.game_to_play = game_to_play
 
     def intro(self):
         print("Welcome to River Crossing Puzzles.")
+        print("You are playing " + self.game_to_play + ".")
         print("This is the textual interface. Each round asks you to move something.")
         print("You can move the boat from shore to shore (left or right).")
         print("Or, you can move object to the boat or to the closest shore.")
