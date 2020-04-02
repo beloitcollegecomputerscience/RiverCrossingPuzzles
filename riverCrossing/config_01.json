@@ -1,14 +1,17 @@
 {
 	"boat_capacity": 2,
 	"driver_name": "farmer",
-	"violations": [ ["goat", "wolf"], ["goat", "hay"] ],
+
+    "violations_comment": "for each violation, write the name of the predator first, then the name of the victim",
+	"violations": [ ["wolf", "goat"], ["goat", "hay"] ],
+
 	"scene_objects":
 		[
 			{
 				"name": "farmer",
 				"image_filename": "farmer.png",
 				"draw_layer": 20,
-				"initial_position": [0, 450],
+				"initial_position": [-300, 450],
 				"current_destination": [0, 0],
 				"initial_scale": 0.15,
 				"is_animating": false,
@@ -19,7 +22,7 @@
 				"name": "wolf",
 				"image_filename": "wolf.png",
 				"draw_layer": 20,
-				"initial_position": [0, 450],
+				"initial_position": [-500, 450],
 				"current_destination": [0, 0],
 				"initial_scale": 0.15,
 				"is_animating": false,
@@ -29,8 +32,8 @@
 			{
 				"name": "goat",
 				"image_filename": "goat.png",
-				"draw_layer": 20,
-				"initial_position": [0, 450],
+				"draw_layer": 21,
+				"initial_position": [-350, 450],
 				"current_destination": [0, 0],
 				"initial_scale": 0.15,
 				"is_animating": false,
@@ -40,8 +43,8 @@
 			{
 				"name": "hay",
 				"image_filename": "hay.png",
-				"draw_layer": 20,
-				"initial_position": [0, 450],
+				"draw_layer": 22,
+				"initial_position": [-400, 450],
 				"current_destination": [0, 0],
 				"initial_scale": 0.15,
 				"is_animating": false,

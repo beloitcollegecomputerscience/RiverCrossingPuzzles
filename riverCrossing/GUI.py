@@ -55,6 +55,9 @@ class GUI(pyglet.window.Window):
 
 
     def boat_clicked(self, x, y):
+        if not self.animation.check_if_all_stopped():
+            return False
+
         boat_object = self.scene_state.get_object_by_name("boat")
         boat_collider_radius = boat_object["radius"]
         return self.sprite_clicked_within_radius(x, y, boat_object["sprite"], boat_collider_radius)

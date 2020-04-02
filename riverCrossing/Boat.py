@@ -52,7 +52,8 @@ class Boat:
 
         rule_violated = self.is_any_rule_violated(direction)
         if rule_violated:
-            self.scene_state.game_state = "loss"
+            self.animation.move_predator()
+            self.scene_state.game_state = "violation_detected"
 
 
     def is_allowed_to_ride(self):
@@ -83,6 +84,7 @@ class Boat:
         # Check if any characters left on the shore correspond to the violating combinations
         for violation in violations:
             if set(characters_left) == set(violation):
+                self.scene_state.current_violation = violation
                 return True
         return False
 
