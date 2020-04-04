@@ -12,7 +12,6 @@ class GameState:
                 else:
                     positives+=[each]
             toReturn+=[[positives, negatives]]
-        print(toReturn)
         return toReturn
     
     def __init__(self, rules):
