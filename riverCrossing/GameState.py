@@ -1,11 +1,11 @@
 from .Move import InvalidMove
 
 class GameState:
-    def __init__(self):
-        self.left_shore = ["man", "wolf", "goat", "hay"]
-        self.right_shore = []
+    def __init__(self, leftShore = ["man", "wolf", "goat", "hay"], boatShore = [], rightShore = []):
+        self.left_shore = leftShore
+        self.right_shore = rightShore
         self.boat_position = "left"
-        self.boat = []
+        self.boat = boatShore
         self.boat_capacity = 2
         self.lose=False
         self.violationCombination={"wolf":"goat","goat":"hay"}
