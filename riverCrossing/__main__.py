@@ -7,6 +7,7 @@ from .Animation import Animation
 from .Boat import Boat
 from .GUI import GUI
 from .Rules import Rules
+from .AudioPlayer import AudioPlayer
 import sys
 
 
@@ -22,9 +23,10 @@ if game_to_play == "console":
 elif game_to_play == "gui":
     # Play the "farmer, goat, wolf, and hay" variation of the game
     rules = Rules("config_01.json").rules
-    scene_state = SceneState(rules)
+    audio_player = AudioPlayer()
+    scene_state = SceneState(rules, audio_player)
     animation = Animation(scene_state)
     animation.boat = Boat(rules["boat_capacity"], rules["driver_name"],
                           scene_state.get_object_by_name("boat")["radius"], animation, scene_state)
-    window = GUI(animation)
+    window = GUI(animation, audio_player)
     pyglet.app.run()
