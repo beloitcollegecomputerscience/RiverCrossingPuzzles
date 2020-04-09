@@ -1,6 +1,6 @@
 # by Aidan and Amine
 import unittest
-from riverCrossingPuzzles import GameState
+from riverCrossing import GameState
 
 class BoatOverfilledTest(unittest.TestCase):
 

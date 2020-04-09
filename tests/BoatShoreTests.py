@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import unittest
-from riverCrossingPuzzles import Boat, GameState
+from riverCrossing import Boat, GameState
 
 class BoatShoreTests(unittest.TestCase):
 

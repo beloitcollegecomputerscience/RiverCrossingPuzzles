@@ -1,5 +1,5 @@
 import unittest
-from riverCrossingPuzzles import GUI
+from riverCrossing import GUI
 
 class GUITest(unittest.TestCase):
 

@@ -3,7 +3,7 @@ Test code for boat class' getSpaces() method which would return a list of the av
 '''
 
 import unittest
-from riverCrossingPuzzles import Boat
+from riverCrossing import Boat
 
 class BoatSpacesTests(unittest.TestCase):
      

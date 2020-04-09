@@ -4,7 +4,7 @@ Created on Oct 31, 2019
 @author: sauga, wadood, and mashfik
 '''
 import unittest
-from riverCrossingPuzzles import Control, Animation, Location, Rules, Validation
+from riverCrossing import Control, Animation, Location, Rules, Validation
 
 
 class EndGameTest(unittest.TestCase):
