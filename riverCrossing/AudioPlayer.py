@@ -39,4 +39,3 @@ class AudioPlayer:
         background_path = os.path.join(self.sounds_dir, file_name)
         data, samplerate = soundfile.read(background_path)
         soundfile.write(background_path, data, samplerate, subtype='PCM_16')
-        
