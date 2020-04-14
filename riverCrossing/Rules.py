@@ -15,8 +15,8 @@ class Rules:
 
         self.rules = self.readJsonRules()
         # output current rules
-        pp = pprint.PrettyPrinter(indent=4)
-        pp.pprint(self.rules)
+        # pp = pprint.PrettyPrinter(indent=4)
+        # pp.pprint(self.rules)
 
 
     def readJsonRules(self):
