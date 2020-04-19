@@ -16,10 +16,13 @@ if len(sys.argv) > 1:
     game_to_play = sys.argv[1]
 
 if game_to_play == "console":
-    state = GameState()
+    rules=Rules(sys.argv[2]).rules
+    state = GameState(rules)
     while not state.has_won() and not state.lost():
             print(state.report())
             state.apply_move(Move(input("move object> "), input("move to> ")))
+    if state.has_won():
+        print("You won")
 elif game_to_play == "gui":
     # Play the "farmer, goat, wolf, and hay" variation of the game
     rules = Rules("config_01.json").rules
