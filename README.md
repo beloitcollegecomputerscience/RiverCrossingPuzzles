@@ -28,5 +28,8 @@ This means you can run it with:
 `python3 -m riverCrossing` followed by either `console` for the console or `gui` for the
 gui game. This should also fix issues for those using IDEs.
 
+For running different games in console use:
+`python3 -m riverCrossing console Name.json` where Name is the Json file.
+
 ## Dependencies
 Dependencies are in `requirements.txt`. Install them with `pip3 -r requirements.txt`
