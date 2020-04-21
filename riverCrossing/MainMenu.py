@@ -53,7 +53,7 @@ class MainMenu:
             splitted_name_and_extension = os.path.splitext(config_name)
             config_button_name = splitted_name_and_extension[0]
             config_file_extension = splitted_name_and_extension[1]
-            # ingore non-json files!
+            # ignore non-json files!
             if (config_file_extension != ".json"):
                 continue
 
