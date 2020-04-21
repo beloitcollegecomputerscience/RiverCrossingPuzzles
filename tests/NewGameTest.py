@@ -20,8 +20,8 @@ class NewGameTest(unittest.TestCase):
         self.assertEqual(temp.left_shore[2], "goat")
         self.assertEqual(temp.left_shore[3], "hay")
 
+    # checks if right shore is empty
     def test_right_shore(self):
-        # checks if right shore is empty
         temp = GameState()
         self.assertEqual(len(temp.right_shore), 0, msg='right shore is not empty')
 
