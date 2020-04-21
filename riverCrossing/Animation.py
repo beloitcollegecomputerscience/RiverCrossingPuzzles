@@ -3,16 +3,20 @@ import math
 import time
 
 
-class Animation:
+class Animation:    
     def __init__(self, scene_state):
         self.scene_state = scene_state
-        self.boat = None
         self.scene_objects = scene_state.scene_objects
+        self.boat = None
 
         self.character_list = scene_state.get_character_list()
         print("Character list: ", self.character_list)
 
         pyglet.clock.schedule_interval(self.update, 1 / 200.0)
+
+
+    def unschedule_update(self):
+        pyglet.clock.unschedule(self.update)
 
 
     def update(self, duration):
@@ -32,7 +36,7 @@ class Animation:
         if self.scene_state.game_state == "loss":
             self.announce_game_over()
 
-        if self.scene_state.has_won(self.check_if_all_stopped(), self.boat.get_number_of_boat_members()):
+        if self.scene_state.has_won(self.check_if_all_stopped()):
             self.scene_state.game_state = "win"
 
 

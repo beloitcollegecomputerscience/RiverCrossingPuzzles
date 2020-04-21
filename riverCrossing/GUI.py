@@ -2,26 +2,25 @@ import pyglet
 
 
 class GUI(pyglet.window.Window):
-    def __init__(self, animation, audio_player):
-        self.animation = animation
-        self.boat = animation.boat
-        self.scene_state = animation.scene_state
+    def __init__(self, scene_state, audio_player, main_menu):
+        self.scene_state = scene_state
+        self.audio_player = audio_player
+        self.main_menu = main_menu
 
         background_image = self.scene_state.get_object_by_name("background")["image"]
         pyglet.window.Window.__init__(self, width=background_image.width,
                                       height=background_image.height, caption="River Crossing Puzzle")
 
-        self.audio_player = audio_player
         self.add_gameplay_buttons_handlers()
 
 
-    def on_draw(self):
-        self.scene_state.main_batch.draw()
-        self.scene_state.buttons_batch.draw()
+    def on_draw(self):        
+        self.scene_state.current_batch.draw()
 
 
-    def on_mouse_press(self, x, y, button, modifiers):
-        self.handle_button_presses(x, y)
+    def on_mouse_press(self, x, y, button, modifiers):        
+        self.handle_menu_button_presses(x, y)
+        self.handle_gameplay_button_presses(x, y)
 
         if self.scene_state.game_state != "playing":
             return
@@ -31,13 +30,13 @@ class GUI(pyglet.window.Window):
             if clicked_character is not None:
                 self.process_clicked_character(clicked_character)
             elif self.boat_clicked(x, y):
-                self.boat.boat_try_ride(1)
+                self.scene_state.boat.boat_try_ride(1)
         elif self.scene_state.boat_position == 'right':
             clicked_character = self.get_clicked_character(x, y)
             if clicked_character is not None:
                 self.process_clicked_character(clicked_character)
             elif self.boat_clicked(x, y):
-                self.boat.boat_try_ride(-1)
+                self.scene_state.boat.boat_try_ride(-1)
 
 
     def on_mouse_motion(self, x, y, dx, dy):
@@ -46,7 +45,7 @@ class GUI(pyglet.window.Window):
 
 
     def get_clicked_character(self, x, y):
-        for character_name in self.animation.character_list:
+        for character_name in self.scene_state.animation.character_list:
             character_object = self.scene_state.get_object_by_name(character_name)
             collider_radius = character_object["radius"]
             if self.scene_state.boat_position != character_object["current_shore"]:
@@ -60,14 +59,14 @@ class GUI(pyglet.window.Window):
         character_name = clicked_character["name"]
         character_is_in_boat = character_name in self.scene_state.characters_on_board
         if character_is_in_boat:
-            self.boat.remove_member(character_name)
+            self.scene_state.boat.remove_member(character_name)
         else:
-            self.boat.add_member(character_name)
+            self.scene_state.boat.add_member(character_name)
         self.audio_player.play_click()
 
 
     def boat_clicked(self, x, y):
-        if not self.animation.check_if_all_stopped():
+        if not self.scene_state.animation.check_if_all_stopped():
             return False
 
         boat_object = self.scene_state.get_object_by_name("boat")
@@ -97,6 +96,7 @@ class GUI(pyglet.window.Window):
         def home_button_actions():
             print('home clicked')
             self.audio_player.play_click()
+            self.main_menu.load_main_menu_screen()
         buttons["home"].on_click = home_button_actions
 
         def help_button_actions():
@@ -105,14 +105,22 @@ class GUI(pyglet.window.Window):
         buttons["help"].on_click = help_button_actions
 
 
-    def handle_button_presses(self, x, y):
+    def handle_gameplay_button_presses(self, x, y):
         for button_name, button_object in self.scene_state.gameplay_buttons.items():
-            if button_object.is_cursor_on_button(x, y):
+            if button_object.is_cursor_on_button(x, y) and self.scene_state.game_state != "menu":
+                button_object.on_click()
+
+
+    def handle_menu_button_presses(self, x, y):
+        for button_name, button_object in self.main_menu.all_config_buttons.items():
+            if button_object.is_cursor_on_button(x, y) and self.scene_state.game_state == "menu":
                 button_object.on_click()
 
 
     def handle_button_hovers(self, x, y):
-        for button_name, button_object in self.scene_state.gameplay_buttons.items():
+        all_buttons = self.scene_state.gameplay_buttons.copy()
+        all_buttons.update(self.main_menu.all_config_buttons)
+        for button_name, button_object in all_buttons.items():
             if button_object.is_cursor_on_button(x, y):
                 button_object.set_hover()
             else:
