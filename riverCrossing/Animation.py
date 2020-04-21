@@ -25,7 +25,6 @@ class Animation:
         for scene_object in self.scene_objects:
             scene_object["is_animating"] = self.animate_character(scene_object["sprite"], scene_object["current_destination"],
                                                         duration, velocity)
-
         if self.scene_state.game_state == "win":
             self.announce_winner()
         if self.scene_state.game_state == "violation_detected":
@@ -39,6 +38,15 @@ class Animation:
         if self.scene_state.has_won(self.check_if_all_stopped()):
             self.scene_state.game_state = "win"
 
+
+    def call_instruction(self):
+        instruction = self.scene_state.get_object_by_name("instruction")
+        if (instruction["sprite"].group == pyglet.graphics.OrderedGroup(0)):
+            print("Open instruction")
+            instruction["sprite"].group = pyglet.graphics.OrderedGroup(40)
+        else:
+            print("Close instruction")
+            instruction["sprite"].group = pyglet.graphics.OrderedGroup(0)
 
     def announce_winner(self):
         announcement = self.scene_state.get_object_by_name("winning_announcement")

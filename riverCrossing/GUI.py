@@ -103,6 +103,7 @@ class GUI(pyglet.window.Window):
         def help_button_actions():
             print('help clicked')
             self.audio_player.play_click()
+            self.scene_state.animation.call_instruction()
         buttons["help"].on_click = help_button_actions
 
 

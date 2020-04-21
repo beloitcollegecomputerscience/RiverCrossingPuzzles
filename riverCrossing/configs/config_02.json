@@ -105,6 +105,17 @@
 				"is_animating": false,
 				"is_character": false,
 				"radius": null
+			},
+			{
+				"name": "instruction",
+				"image_filename": "instruction_02.png",
+				"draw_layer": 0,
+				"initial_position": [100, 80],
+				"current_destination": [100, 80],
+				"initial_scale": 0.5,
+				"is_animating": false,
+				"is_character": false,
+				"radius": null
 			}
 		]
 }
