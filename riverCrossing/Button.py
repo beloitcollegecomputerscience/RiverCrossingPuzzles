@@ -2,17 +2,18 @@ import pyglet
 import math
 import time
 
-
 class Button:
-    def __init__(self, width, height, image_file, initial_scale, audio_player):
-        self.audio_player = audio_player
+
+    def __init__(self, width, height, name, initial_scale, audio_player):
         self.width = width
         self.height = height
-        self.image_file = image_file
+        self.name = name
+        self.initial_scale = initial_scale
+        self.audio_player = audio_player
+        self.image_file = name + ".png"
         self.image = None
         self.sprite = None
         self.sound = None
-        self.initial_scale = initial_scale
 
         self.on_click = None
         self.is_hovered = False

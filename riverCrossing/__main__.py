@@ -7,11 +7,13 @@ from .Animation import Animation
 from .Boat import Boat
 from .GUI import GUI
 from .Rules import Rules
+from .MainMenu import MainMenu
 from .AudioPlayer import AudioPlayer
 import sys
 
 
 game_to_play = "console"
+
 if len(sys.argv) > 1:
     game_to_play = sys.argv[1]
 
@@ -21,12 +23,8 @@ if game_to_play == "console":
             print(state.report())
             state.apply_move(Move(input("move object> "), input("move to> ")))
 elif game_to_play == "gui":
-    # Play the "farmer, goat, wolf, and hay" variation of the game
-    rules = Rules("config_01.json").rules
     audio_player = AudioPlayer()
-    scene_state = SceneState(rules, audio_player)
-    animation = Animation(scene_state)
-    animation.boat = Boat(rules["boat_capacity"], rules["driver_name"],
-                          scene_state.get_object_by_name("boat")["radius"], animation, scene_state)
-    window = GUI(animation, audio_player)
+    scene_state = SceneState(audio_player)
+    menu = MainMenu(scene_state)
+    window = GUI(scene_state, audio_player, menu)
     pyglet.app.run()

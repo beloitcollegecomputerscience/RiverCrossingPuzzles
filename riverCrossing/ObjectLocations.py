@@ -18,6 +18,8 @@ class ObjectLocations:
         self.each_height = 65
         self.each_width = 100
 
+        self.set_initial_destinations()
+
 
     def set_initial_destinations(self):
         self.scene_state.get_object_by_name("boat")["current_destination"] = [270, 218]
