@@ -1,0 +1,2 @@
+from tests.test_moveValidity import testMoveValidity
+import tests.dummyStates
