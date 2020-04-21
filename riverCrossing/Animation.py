@@ -25,6 +25,7 @@ class Animation:
         for scene_object in self.scene_objects:
             scene_object["is_animating"] = self.animate_character(scene_object["sprite"], scene_object["current_destination"],
                                                         duration, velocity)
+            
         if self.scene_state.game_state == "win":
             self.announce_winner()
         if self.scene_state.game_state == "violation_detected":
