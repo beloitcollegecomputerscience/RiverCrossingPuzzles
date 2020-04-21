@@ -124,7 +124,6 @@ class MainMenu:
     def load_main_menu_screen(self):
         self.scene_state.current_batch = self.scene_state.menu_batch
         self.scene_state.game_state = "menu"
-
         self.scene_state.audio_player.stop_music()
 
         # it's crucially important to unschedule the update, pyglet is not doing this automatically
