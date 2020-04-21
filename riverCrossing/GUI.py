@@ -91,6 +91,7 @@ class GUI(pyglet.window.Window):
         def restart_button_actions():
             print('restart clicked')
             self.audio_player.play_click()
+            self.main_menu.reload_current_game()
         buttons["restart"].on_click = restart_button_actions
 
         def home_button_actions():

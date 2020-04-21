@@ -80,6 +80,7 @@ class MainMenu:
             def menu_buttons_actions(config_name=config_name):
                 self.scene_state.audio_player.play_click()
                 self.load_new_game_with_config(config_name)
+                self.current_game = config_name
 
             button_object.on_click = menu_buttons_actions
 
@@ -120,6 +121,8 @@ class MainMenu:
 
         self.scene_state.audio_player.play_music_looped()
 
+    def reload_current_game(self):
+        self.load_new_game_with_config(self.current_game)
         
     def load_main_menu_screen(self):
         self.scene_state.current_batch = self.scene_state.menu_batch
