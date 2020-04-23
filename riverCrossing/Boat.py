@@ -1,11 +1,9 @@
-class Boat:
-    def __init__(self, boat_capacity, driver_name, boat_radius, animation, scene_state):
-        self.animation = animation
-        self.scene_state = scene_state
+class Boat:    
+    def __init__(self, boat_capacity, driver_name, boat_radius, scene_state):
         self.boat_capacity = boat_capacity
         self.driver_name = driver_name
         self.boat_radius = boat_radius
-        self.boat_has_driver = False
+        self.scene_state = scene_state
 
 
     def add_member(self, character_name):
@@ -52,7 +50,7 @@ class Boat:
 
         rule_violated = self.is_any_rule_violated(direction)
         if rule_violated:
-            self.animation.move_predator()
+            self.scene_state.animation.move_predator()
             self.scene_state.game_state = "violation_detected"
 
 
