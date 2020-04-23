@@ -1,5 +1,5 @@
 {
-	"boat_capacity": 4,
+	"boat_capacity": 3,
 	"driver_name": "farmer",
 
     "violations_comment": "for each violation, write the name of the predator first, then the name of the victim",
