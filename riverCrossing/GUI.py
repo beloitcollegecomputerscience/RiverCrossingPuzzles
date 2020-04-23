@@ -91,6 +91,7 @@ class GUI(pyglet.window.Window):
         def restart_button_actions():
             print('restart clicked')
             self.audio_player.play_click()
+            self.main_menu.reload_current_game()
         buttons["restart"].on_click = restart_button_actions
 
         def home_button_actions():
@@ -102,6 +103,7 @@ class GUI(pyglet.window.Window):
         def help_button_actions():
             print('help clicked')
             self.audio_player.play_click()
+            self.scene_state.animation.call_instruction()
         buttons["help"].on_click = help_button_actions
 
 

@@ -40,6 +40,15 @@ class Animation:
             self.scene_state.game_state = "win"
 
 
+    def call_instruction(self):
+        instruction = self.scene_state.get_object_by_name("instruction")
+        if (instruction["sprite"].group == pyglet.graphics.OrderedGroup(0)):
+            print("Open instruction")
+            instruction["sprite"].group = pyglet.graphics.OrderedGroup(40)
+        else:
+            print("Close instruction")
+            instruction["sprite"].group = pyglet.graphics.OrderedGroup(0)
+
     def announce_winner(self):
         announcement = self.scene_state.get_object_by_name("winning_announcement")
         announcement["sprite"].group = pyglet.graphics.OrderedGroup(30)
