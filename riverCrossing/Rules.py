@@ -9,9 +9,8 @@ class Rules:
     """
 
     def __init__(self, rules_file):
-        self.rules = {}
-        working_dir = os.path.dirname(os.path.realpath(__file__))
-        self.rules_file = working_dir + "/" + rules_file
+        self.rules_file = rules_file
+        self.rules = {}        
 
         self.rules = self.readJsonRules()
         # output current rules
