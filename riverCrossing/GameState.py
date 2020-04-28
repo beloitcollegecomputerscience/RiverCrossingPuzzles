@@ -1,14 +1,29 @@
 from .Move import InvalidMove
 
 class GameState:
-    def __init__(self, leftShore = ["man", "wolf", "goat", "hay"], boatShore = [], rightShore = []):
-        self.left_shore = leftShore
-        self.right_shore = rightShore
-        self.boat_position = "left"
-        self.boat = boatShore
-        self.boat_capacity = 2
+    def process_violations(self, violation_combination):
+        toReturn=[]
+        for violation in violation_combination:
+            positives=[]
+            negatives=[]
+            for each in violation:
+                if '!' in each:
+                    negatives+=[each[1:]]
+                else:
+                    positives+=[each]
+            toReturn+=[[positives, negatives]]
+        return toReturn
+    
+    def __init__(self, rules):
+        self.left_shore = rules["left_shore"]
+        self.right_shore = rules["right_shore"]
+        self.boat_position = rules['boat_position']
+        self.boat = []
+        self.boat_capacity = rules["boat_capacity"]
+        self.violation_combination=self.process_violations(rules["landIncompatible"])
+        self.win_condition=rules["win_condition"]
+
         self.lose=False
-        self.violationCombination={"wolf":"goat","goat":"hay"}
 
     def report(self):
         s = ""
@@ -17,6 +32,25 @@ class GameState:
         s += report_shore("boat", self.boat) + "\n"
         s += "The boat is on the " + self.boat_position + " shore."
         return s
+
+    def checkAllConditionsInArray(self, list, function):
+        toreturn=True
+        for items in list:
+            if not function(items):
+                toreturn=False
+                break
+        return toreturn
+
+    def checkViolations(self, location):
+        posi=lambda a:a in location
+        nega=lambda a:a not in location
+        for violation in self.violation_combination:
+            positiveCond=violation[0]
+            negativeCond=violation[1]
+            if self.checkAllConditionsInArray(positiveCond,posi) and self.checkAllConditionsInArray(negativeCond,nega):
+                print(positiveCond ," cannot happen on same shore, you lost :(")
+                self.lose=True
+                return
 
     def checkIfObjectsClash(self,location):
         if 'man' not in location:
@@ -35,10 +69,14 @@ class GameState:
             if move.location not in ["left", "right"]:
                 raise InvalidMove("Can't move boat anywhere but left or right.")
             self.boat_position = move.location
-            toCheck=[self.left_shore,self.right_shore,self.boat]
+            if self.boat_position=="left":
+                self.checkViolations(self.right_shore)
+            else:
+                self.checkViolations(self.left_shore)
+            '''toCheck=[self.left_shore,self.right_shore,self.boat]
             for location in toCheck:
                 if self.checkIfObjectsClash(location):
-                    break
+                    break'''
         else:
             if move.location not in ["boat", "shore"]:
                 raise InvalidMove("Can't move objects anywhere but onto boat or shore.")
@@ -71,7 +109,7 @@ class GameState:
         "Returns true if the game is won and false otherwise."
         # check if the set of items on the right shore is a subset of the set of
         # required items.
-        return set(["man", "wolf", "goat", "hay"]).issubset(self.right_shore)
+        return set(self.win_condition).issubset(self.right_shore)
 
     def lost(self):
         #returns the lose variable which is 'false' when no clash between entities and 'True' otherwise
