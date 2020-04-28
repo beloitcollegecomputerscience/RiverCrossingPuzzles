@@ -4,15 +4,19 @@ import unittest
 from riverCrossing import GameState
 from riverCrossing import Move
 from tests import dummyStates
+from tests.dummyStates import DummyStates
 
 class testMoveValidity(unittest.TestCase):
-    
+
+    #def __init_ (self):
+
     #def test_basic(self):
     #    self.assertGreater(sampleSet.len(), 0)
     
     "test for impropper input"
     def test_input(self):
-        sampleSet = dummyStates.generate()
+        x = DummyStates()
+        sampleSet = x.generate()
         badSubject = Move("Purple people eater.", "boat")
         badLocation = Move("man", "potato")
         for state in sampleSet:
