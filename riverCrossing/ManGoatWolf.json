@@ -1,0 +1,9 @@
+{
+    "left_shore":["man","goat","wolf","hay"],
+    "right_shore":[],
+    "boat_position":"left",
+    "landIncompatible":[["goat","hay","!man"],["wolf","hay","!man"]],
+    "boat_capacity":2,
+    "drivers":["man"],
+    "win_condition":["man","wolf","goat","hay"]
+}

@@ -1,0 +1,13 @@
+Game Rules:
+
+1. If the goat and the hay are left on the same side of the river without the man, the goat will eat the hay.
+
+2. If the wolf and the goat are left on the same side of the river without the man, the wolf will eat the goat.
+
+3. In order to win, you must move all the objects across the river without any being eaten.
+
+How to Play:
+
+1. To move an object (man, wolf, goat, or hay) on/off the boat, write the name of the object for [move object] and type enter. Then, type “onto boat” or “off of boat” for [move to].
+
+2. To move the boat to the other side, write “boat” for [move object], and write “right” or “left” for [move to]
