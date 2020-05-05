@@ -8,13 +8,13 @@ from .Button import Button
 from .Animation import Animation
 from .Boat import Boat
 from .ObjectLocations import ObjectLocations
+from .ConfigLoader import ConfigLoader
 
 
 class MainMenu:	
     def __init__(self, scene_state):
         self.scene_state = scene_state
-        self.config_directory = "configs"
-        self.config_directory_full = join( os.path.dirname(os.path.realpath(__file__)), self.config_directory )
+        self.config_loader = ConfigLoader(scene_state)
         self.all_config_buttons = {}
 
         self.menu_background = self.init_menu_background()
@@ -26,9 +26,10 @@ class MainMenu:
 
 
     def build_menu(self):        
-        all_config_files = self.find_configs()
+        all_config_files = self.config_loader.find_configs()
         
-        # deleting old sprites explicitly, to remove them from video memory and avoid overlapping
+        # deleting old sprites explicitly
+        # to remove them from video memory and avoid overlapping
         for config_name, button_object in self.all_config_buttons.items():
             button_object.sprite.delete()
 
@@ -83,21 +84,10 @@ class MainMenu:
                 self.current_game = config_name
 
             button_object.on_click = menu_buttons_actions
-
-
-    def find_configs(self):
-        config_files = []        
-        for directory_item in listdir(self.config_directory_full):
-            if isfile( join(self.config_directory_full, directory_item) ):
-                config_files.append(directory_item)
-
-        print("found configs: ", config_files)
-        return config_files
-
-
+ 
     def load_new_game_with_config(self, config_name):
         print("loading new game with config: " + config_name)
-        config_full_path = join( self.config_directory_full, config_name) + ".json"
+        config_full_path = join( self.config_loader.config_directory_full, config_name) + ".json"
         rules = Rules(config_full_path).rules
 
         self.scene_state.boat_position = "left"
