@@ -23,12 +23,3 @@ class Rules:
             data = json.load(rules_file)
         return data
 
-
-    def readRules(self):
-        # Read the rules file into dictionary
-        with open(self.rules_file) as rules_file:
-            for line in rules_file:
-                key, values = line.split(':')
-                split_values = [v.strip() for v in values.split(',')]
-                self.rules[key] = split_values
-        return self.rules
