@@ -1,9 +1,10 @@
 import unittest
 
-from .Move import Move,InvalidMove
+from .Move import Move,InvalidMove,apply_move
 from .GameState import GameState
 
 class TestGameState(unittest.TestCase):
+
     def test_boat_shore_to_shore(self):
         state = GameState()
         self.assertEqual(state.boat_position, "left")
@@ -43,3 +44,4 @@ class TestGameState(unittest.TestCase):
                 state.checkIfObjectsClash(location)
                 self.assertEqual(state.lost(),True)
                 state.lose=False
+

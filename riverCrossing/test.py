@@ -3,7 +3,7 @@ import sys
 sys.path.append('../')
 from tests import BoatOverfilledTest
 from tests import BoatShoreTests
-from tests import ControlTestForMakeMove
+from tests import test_moveValidity
 from tests import BoatSpacesTests
 from tests import LocationTest
 from tests import EndGameTest
