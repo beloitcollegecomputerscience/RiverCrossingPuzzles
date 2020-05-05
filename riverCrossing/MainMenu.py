@@ -121,9 +121,12 @@ class MainMenu:
 
         self.scene_state.audio_player.play_music_looped()
 
+
     def reload_current_game(self):
+        self.scene_state.animation.unschedule_update()
         self.load_new_game_with_config(self.current_game)
-        
+
+
     def load_main_menu_screen(self):
         self.scene_state.current_batch = self.scene_state.menu_batch
         self.scene_state.game_state = "menu"
