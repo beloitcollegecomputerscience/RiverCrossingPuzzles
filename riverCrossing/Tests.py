@@ -6,35 +6,24 @@ from .Animation import Animation
 from .Boat import Boat
 from .GUI import GUI
 from .Rules import Rules
+from .MainMenu import MainMenu
+from .AudioPlayer import AudioPlayer
 import sys
 
 
 class TestGameState(unittest.TestCase):
 	def set_up_GUI_game(self):
-		rules = Rules("rules.json").rules # "farmer, goat, wolf, and hay" variation
-		scene_state = SceneState(rules)
-		animation = Animation(scene_state)
-		animation.boat = Boat(rules["boat_capacity"], rules["driver_name"],
-								scene_state.get_object_by_name("boat")["radius"], animation, scene_state)
-		return [rules, scene_state, animation, animation.boat]
-
-
-	def test_boat_shore_to_shore(self):
-		state = GameState()
-		self.assertEqual(state.boat_position, "left")
-
-		move = Move("boat", "right")
-		state.apply_move(move)
-		self.assertEqual(state.boat_position, "right")
-
-		move = Move("boat", "left")
-		state.apply_move(move)
-		self.assertEqual(state.boat_position, "left")
-
+		audio_player = AudioPlayer()
+		scene_state = SceneState(audio_player)
+		menu = MainMenu(scene_state)
+		menu.load_new_game_with_config("config_01")
+		animation = scene_state.animation
+		boat = scene_state.boat
+		return [scene_state, animation, boat]
 
 	# Tests for boat class
 	def test_boat_add_member(self):
-		rules, scene_state, animation, animation.boat = self.set_up_GUI_game()
+		scene_state, animation, animation.boat = self.set_up_GUI_game()
 		self.assertEqual(animation.boat.if_boat_has_driver(), False)
 		self.assertEqual(animation.boat.get_number_of_boat_members(), 0)
 		self.assertEqual(animation.boat.is_allowed_to_ride(), False)
@@ -56,7 +45,7 @@ class TestGameState(unittest.TestCase):
 
 
 	def test_boat_remove_member(self):
-		rules, scene_state, animation, animation.boat = self.set_up_GUI_game()
+		scene_state, animation, animation.boat = self.set_up_GUI_game()
 
 		animation.boat.add_member("farmer") # add driver
 		animation.boat.add_member("goat") # add second member
@@ -81,7 +70,7 @@ class TestGameState(unittest.TestCase):
 
 
 	def test_boat_get_available_seat_number(self):
-		rules, scene_state, animation, animation.boat = self.set_up_GUI_game()      
+		scene_state, animation, animation.boat = self.set_up_GUI_game()      
 
 		self.assertEqual(animation.boat.get_available_seat_number(), 0)
 		animation.boat.add_member("farmer")
@@ -91,7 +80,7 @@ class TestGameState(unittest.TestCase):
 
 
 	def test_boat_try_ride(self):
-		rules, scene_state, animation, animation.boat = self.set_up_GUI_game()
+		scene_state, animation, animation.boat = self.set_up_GUI_game()
 
 		# allow to ride - boat_position should change according to the direction
 		animation.boat.add_member("farmer")
@@ -107,7 +96,7 @@ class TestGameState(unittest.TestCase):
 
 
 	def test_is_any_rule_violated(self):
-		rules, scene_state, animation, animation.boat = self.set_up_GUI_game()
+		scene_state, animation, animation.boat = self.set_up_GUI_game()
 
 		self.assertEqual(animation.boat.is_any_rule_violated(1), False)
 		self.assertEqual(animation.boat.is_any_rule_violated(-1), False)
@@ -126,33 +115,36 @@ class TestGameState(unittest.TestCase):
 
 	# Tests for SceneState
 	def test_get_character_list(self):
-		rules, scene_state, animation, animation.boat = self.set_up_GUI_game()
+		scene_state, animation, animation.boat = self.set_up_GUI_game()
 		self.assertEqual(len(scene_state.get_character_list()), 4)
 
 
 	def test_get_object_by_name(self):
-		rules, scene_state, animation, animation.boat = self.set_up_GUI_game()
+		scene_state, animation, animation.boat = self.set_up_GUI_game()
 		farmer = scene_state.get_object_by_name("farmer")
 		self.assertEqual(farmer["name"], "farmer")
 
 
 	def test_has_won(self):
-		rules, scene_state, animation, animation.boat = self.set_up_GUI_game()
+		scene_state, animation, animation.boat = self.set_up_GUI_game()
 
-		self.assertEqual(scene_state.has_won(True, 0), False) # no one on right shore
+		self.assertEqual(scene_state.has_won(True), False) # no one on right shore & no one on boat
 
 		for name in scene_state.get_character_list(): # put all characters on right shore
 			character_object = scene_state.get_object_by_name(name)
 			character_object["current_shore"] = "right"
 
-		self.assertEqual(scene_state.has_won(True, 1), False)
-		self.assertEqual(scene_state.has_won(False, 0), False)
-		self.assertEqual(scene_state.has_won(True, 0), True)
+		animation.boat.add_member("farmer") # 1 characer on boat
+		self.assertEqual(scene_state.has_won(True), False)
+
+		animation.boat.remove_member("farmer") # no one on boat
+		self.assertEqual(scene_state.has_won(False), False)
+		self.assertEqual(scene_state.has_won(True), True)
 
 
 	#Tests for ObjectLocation
 	def test_set_destinations_to_other_shore(self):
-		rules, scene_state, animation, animation.boat = self.set_up_GUI_game()
+		scene_state, animation, animation.boat = self.set_up_GUI_game()
 
 		scene_state.object_locations.set_destinations_to_other_shore(1)
 		for character_name in scene_state.object_locations.character_list:
